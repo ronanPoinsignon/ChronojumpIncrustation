@@ -1,0 +1,7 @@
+.classpath
+/.idea
+.project
+/.settings
+/classes
+/target
+/src/main/resources/META-INF
