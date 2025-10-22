@@ -42,6 +42,7 @@ public class ControllerVideo implements Initializable {
 	private static final int PORT_CHEVAL_MERE = 8098;
 	private static final int PORT_CHEVAL_PERE_MERE = 8099;
 	private static final int PORT_CAVALIER_PRENOM = 8100;
+	private static final int PORT_NUMERO_EPREUVE = 8101;
 
 	private static final int FADE_DURATION = 200;
 
@@ -51,6 +52,8 @@ public class ControllerVideo implements Initializable {
 	private static final int BASE_WIDTH = 1280;
 	private static final int BASE_HEIGHT = 720;
 
+	@FXML
+	private Label idNumeroEpreuve;
 	@FXML
 	private Label idLieu;
 	@FXML
@@ -112,6 +115,7 @@ public class ControllerVideo implements Initializable {
 		labelTacheMap.put(idMereCheval, new TacheReception(ControllerVideo.PORT_CHEVAL_MERE));
 		labelTacheMap.put(idPereMereCheval, new TacheReception(ControllerVideo.PORT_CHEVAL_PERE_MERE));
 		labelTacheMap.put(idPrenomCavalier, new TacheReception(ControllerVideo.PORT_CAVALIER_PRENOM));
+		labelTacheMap.put(idNumeroEpreuve, new TacheReception(ControllerVideo.PORT_NUMERO_EPREUVE));
 //				labelTacheMap.forEach(this::bind);
 
 		idGridpaneChrono.visibleProperty().bind(idChrono.visibleProperty());

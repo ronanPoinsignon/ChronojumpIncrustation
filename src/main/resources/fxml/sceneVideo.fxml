@@ -170,7 +170,7 @@
                 <RowConstraints percentHeight="50.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #004C66; -fx-background-radius: 10%;" text="15" textFill="WHITE" GridPane.rowIndex="1">
+                  <Label fx:id="idNumeroEpreuve" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #004C66; -fx-background-radius: 10%;" text="15" textFill="WHITE" GridPane.rowIndex="1">
                      <font>
                         <Font name="Arial Bold" size="16.0" />
                      </font>
