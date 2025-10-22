@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import prog.transmission.TacheReception;
 
-public class NewControllerVideo implements Initializable {
+public class ControllerVideo implements Initializable {
 
 	private static final String INIT_IP_ADRESSE = "192.168.1.36";
 
@@ -101,17 +101,17 @@ public class NewControllerVideo implements Initializable {
 
 		// Gestion des events de récéption des informations
 		final Map<Label, TacheReception> labelTacheMap = new HashMap<>();
-		labelTacheMap.put(idNomCavalier, new TacheReception(NewControllerVideo.PORT_CAVALIER_NOM));
-		labelTacheMap.put(idNomCheval, new TacheReception(NewControllerVideo.PORT_CHEVAL_NOM));
-		labelTacheMap.put(idPenalite, new TacheReception(NewControllerVideo.PORT_PRENALITE));
-		labelTacheMap.put(idChrono, new TacheReception(NewControllerVideo.PORT_CHRONO));
-		labelTacheMap.put(idLieu, new TacheReception(NewControllerVideo.PORT_LIEU));
-		labelTacheMap.put(idDossard, new TacheReception(NewControllerVideo.PORT_DOSSARD));
-		labelTacheMap.put(idRaceCheval, new TacheReception(NewControllerVideo.PORT_CHEVAL_RACE));
-		labelTacheMap.put(idPereCheval, new TacheReception(NewControllerVideo.PORT_CHEVAL_PERE));
-		labelTacheMap.put(idMereCheval, new TacheReception(NewControllerVideo.PORT_CHEVAL_MERE));
-		labelTacheMap.put(idPereMereCheval, new TacheReception(NewControllerVideo.PORT_CHEVAL_PERE_MERE));
-		labelTacheMap.put(idPrenomCavalier, new TacheReception(NewControllerVideo.PORT_CAVALIER_PRENOM));
+		labelTacheMap.put(idNomCavalier, new TacheReception(ControllerVideo.PORT_CAVALIER_NOM));
+		labelTacheMap.put(idNomCheval, new TacheReception(ControllerVideo.PORT_CHEVAL_NOM));
+		labelTacheMap.put(idPenalite, new TacheReception(ControllerVideo.PORT_PRENALITE));
+		labelTacheMap.put(idChrono, new TacheReception(ControllerVideo.PORT_CHRONO));
+		labelTacheMap.put(idLieu, new TacheReception(ControllerVideo.PORT_LIEU));
+		labelTacheMap.put(idDossard, new TacheReception(ControllerVideo.PORT_DOSSARD));
+		labelTacheMap.put(idRaceCheval, new TacheReception(ControllerVideo.PORT_CHEVAL_RACE));
+		labelTacheMap.put(idPereCheval, new TacheReception(ControllerVideo.PORT_CHEVAL_PERE));
+		labelTacheMap.put(idMereCheval, new TacheReception(ControllerVideo.PORT_CHEVAL_MERE));
+		labelTacheMap.put(idPereMereCheval, new TacheReception(ControllerVideo.PORT_CHEVAL_PERE_MERE));
+		labelTacheMap.put(idPrenomCavalier, new TacheReception(ControllerVideo.PORT_CAVALIER_PRENOM));
 //				labelTacheMap.forEach(this::bind);
 
 		idGridpaneChrono.visibleProperty().bind(idChrono.visibleProperty());
@@ -125,11 +125,11 @@ public class NewControllerVideo implements Initializable {
 		allLabelsVisible.addListener(addFadeTransition(idGridpaneInfo));
 
 		//		Gestion responsive
-		idGridpaneInfo.prefHeightProperty().bind(idAnchorBase.heightProperty().multiply(NewControllerVideo.PANEL_INFO_COUREUR_HEIGHT_PERCENTAGE));
-		idGridpaneEpreuve.prefHeightProperty().bind(idAnchorBase.heightProperty().multiply(NewControllerVideo.PANEL_INFO_EPREUVE_HEIGHT_PERCENTAGE));
+		idGridpaneInfo.prefHeightProperty().bind(idAnchorBase.heightProperty().multiply(ControllerVideo.PANEL_INFO_COUREUR_HEIGHT_PERCENTAGE));
+		idGridpaneEpreuve.prefHeightProperty().bind(idAnchorBase.heightProperty().multiply(ControllerVideo.PANEL_INFO_EPREUVE_HEIGHT_PERCENTAGE));
 
 		idAnchorBase.heightProperty().addListener((obs, oldV, newV) -> {
-			final double heightRatio = newV.doubleValue()/NewControllerVideo.BASE_HEIGHT;
+			final double heightRatio = newV.doubleValue()/ ControllerVideo.BASE_HEIGHT;
 			AnchorPane.setTopAnchor(idGridpaneEpreuve, 33 * heightRatio);
 		});
 		idGridpaneEpreuve.heightProperty().addListener((obs, oldV, newV) -> {
@@ -187,15 +187,15 @@ public class NewControllerVideo implements Initializable {
 	private void setLabelTextSize(final Label label, final int defaultSize) {
 		final double height = label.getHeight();
 		final double width = label.getWidth();
-		final double heightRatio = height/NewControllerVideo.BASE_HEIGHT;
-		final double widthRatio = width/NewControllerVideo.BASE_WIDTH;
+		final double heightRatio = height/ ControllerVideo.BASE_HEIGHT;
+		final double widthRatio = width/ ControllerVideo.BASE_WIDTH;
 
 		final double textWidth = Math.max(height, widthRatio * defaultSize);
 
 		//		label.setFont(Font.font(label.getFont().getFamily(), textWidth));
 		//		System.out.println("height ratio : " + heightRatio );
 		//		System.out.println("text width : " + textWidth);
-		System.out.println("result : " + NewControllerVideo.calculateMaxFontSize(label.getText(), label.getFont().getFamily(), label.getWidth(), 16));
+		System.out.println("result : " + ControllerVideo.calculateMaxFontSize(label.getText(), label.getFont().getFamily(), label.getWidth(), 16));
 	}
 
 	public static double calculateMaxFontSize(final String text, final String fontFamily, final double maxWidth, final double baseFontSize) {
@@ -218,7 +218,7 @@ public class NewControllerVideo implements Initializable {
 
 	private ChangeListener<? super Boolean> addFadeTransition(final Node node) {
 		return (obs, oldV, newV) -> {
-			final FadeTransition transition = new FadeTransition(Duration.millis(NewControllerVideo.FADE_DURATION), node);
+			final FadeTransition transition = new FadeTransition(Duration.millis(ControllerVideo.FADE_DURATION), node);
 			if(newV) {
 				transition.setFromValue(0);
 				transition.setToValue(1);
@@ -237,7 +237,7 @@ public class NewControllerVideo implements Initializable {
 				.then(false)
 				.otherwise(true));
 		label.visibleProperty().addListener((obs, oldV, newV) -> {
-			final FadeTransition transition = new FadeTransition(Duration.millis(NewControllerVideo.FADE_DURATION), label);
+			final FadeTransition transition = new FadeTransition(Duration.millis(ControllerVideo.FADE_DURATION), label);
 			if(newV) {
 				transition.setFromValue(0);
 				transition.setToValue(1.0);

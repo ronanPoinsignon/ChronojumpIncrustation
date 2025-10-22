@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import prog.controllers.NewControllerVideo;
+import prog.controllers.ControllerVideo;
 
 /**
  *
@@ -23,13 +23,13 @@ public class App extends Application {
 	@Override
 	public void start(final Stage pStage) throws Exception {
 		final Stage stage = new Stage();
-		final FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/new_sceneVideo.fxml"));
+		final FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/sceneVideo.fxml"));
 		final Parent sceneVideo = loader.load();
 		final Scene scene = new Scene(sceneVideo);
 		//		stage.initStyle(StageStyle.UNDECORATED);
 		stage.setScene(scene);
 		stage.show();
-		final NewControllerVideo controller = loader.getController();
+		final ControllerVideo controller = loader.getController();
 		controller.addevent(stage);
 		//		controller.setDimension(stage);
 	}
