@@ -29,6 +29,8 @@ import prog.transmission.TacheReception;
 
 public class NewControllerVideo implements Initializable {
 
+	private static final String INIT_IP_ADRESSE = "192.168.1.36";
+
 	private static final int PORT_CAVALIER_NOM = 8090;
 	private static final int PORT_CHEVAL_NOM = 8091;
 	private static final int PORT_PRENALITE = 8092;
@@ -95,7 +97,7 @@ public class NewControllerVideo implements Initializable {
 
 	@Override
 	public void initialize(final URL location, final ResourceBundle resources) {
-		TacheReception.setAdresse(ControllerVideo.INIT_IP_ADRESSE);
+		TacheReception.setAdresse(INIT_IP_ADRESSE);
 
 		// Gestion des events de récéption des informations
 		final Map<Label, TacheReception> labelTacheMap = new HashMap<>();
