@@ -3,7 +3,7 @@ package prog.observableproperties;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class StringObsProperty {
+public class StringObsProperty extends ObsProperty<String> {
 
 	private final StringProperty stringProps;
 
@@ -19,11 +19,11 @@ public class StringObsProperty {
         return stringProps.get();
     }
 
-    public void setString(String newString){
+    public void setValue(String newString){
         this.stringProps.setValue(newString);
     }
 
-    public StringProperty stringProperty() {
+    public StringProperty getValue() {
         return this.stringProps;
     }
 }

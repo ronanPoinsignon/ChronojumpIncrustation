@@ -4,14 +4,18 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Function;
 
 import javafx.animation.FadeTransition;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -25,24 +29,24 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import prog.transmission.TacheReception;
+import prog.observableproperties.StringObsProperty;
+import prog.observableproperties.json.JsonCheval;
+import prog.transmission.AbstractTacheReception;
+import prog.transmission.JsonTacheReception;
+import prog.transmission.RawTacheReception;
 
 public class ControllerVideo implements Initializable {
 
-	private static final String INIT_IP_ADRESSE = "192.168.1.36";
+//	private static final String INIT_IP_ADRESSE = "192.168.1.31";
+	private static final String INIT_IP_ADRESSE = "169.254.122.66";
 
-	private static final int PORT_CAVALIER_NOM = 8090;
-	private static final int PORT_CHEVAL_NOM = 8091;
-	private static final int PORT_PRENALITE = 8092;
-	private static final int PORT_CHRONO = 8093;
-	private static final int PORT_LIEU = 8094;
-	private static final int PORT_DOSSARD = 8095;
-	private static final int PORT_CHEVAL_RACE = 8096;
-	private static final int PORT_CHEVAL_PERE = 8097;
-	private static final int PORT_CHEVAL_MERE = 8098;
-	private static final int PORT_CHEVAL_PERE_MERE = 8099;
-	private static final int PORT_CAVALIER_PRENOM = 8100;
-	private static final int PORT_NUMERO_EPREUVE = 8101;
+	private static final int PORT_CHEVAL_JSON = 8091;				// port incruste cheval
+	private static final int PORT_PRENALITE = 8092;					// port incruste penalite
+	private static final int PORT_CHRONO = 8093;					// port incruste chrono
+	private static final int PORT_DOSSARD = 8094;					// port incruste dossard
+
+	private static final int PORT_LIEU = 8095; 						// port incruste lieu
+	private static final int PORT_NUMERO_EPREUVE = 8101;			// port incruste lieu
 
 	private static final int FADE_DURATION = 200;
 
@@ -100,23 +104,42 @@ public class ControllerVideo implements Initializable {
 
 	@Override
 	public void initialize(final URL location, final ResourceBundle resources) {
-		TacheReception.setAdresse(INIT_IP_ADRESSE);
+		AbstractTacheReception.setAdresse(INIT_IP_ADRESSE);
 
 		// Gestion des events de récéption des informations
-		final Map<Label, TacheReception> labelTacheMap = new HashMap<>();
-		labelTacheMap.put(idNomCavalier, new TacheReception(ControllerVideo.PORT_CAVALIER_NOM));
-		labelTacheMap.put(idNomCheval, new TacheReception(ControllerVideo.PORT_CHEVAL_NOM));
-		labelTacheMap.put(idPenalite, new TacheReception(ControllerVideo.PORT_PRENALITE));
-		labelTacheMap.put(idChrono, new TacheReception(ControllerVideo.PORT_CHRONO));
-		labelTacheMap.put(idLieu, new TacheReception(ControllerVideo.PORT_LIEU));
-		labelTacheMap.put(idDossard, new TacheReception(ControllerVideo.PORT_DOSSARD));
-		labelTacheMap.put(idRaceCheval, new TacheReception(ControllerVideo.PORT_CHEVAL_RACE));
-		labelTacheMap.put(idPereCheval, new TacheReception(ControllerVideo.PORT_CHEVAL_PERE));
-		labelTacheMap.put(idMereCheval, new TacheReception(ControllerVideo.PORT_CHEVAL_MERE));
-		labelTacheMap.put(idPereMereCheval, new TacheReception(ControllerVideo.PORT_CHEVAL_PERE_MERE));
-		labelTacheMap.put(idPrenomCavalier, new TacheReception(ControllerVideo.PORT_CAVALIER_PRENOM));
-		labelTacheMap.put(idNumeroEpreuve, new TacheReception(ControllerVideo.PORT_NUMERO_EPREUVE));
-//				labelTacheMap.forEach(this::bind);
+
+		final Map<Label, RawTacheReception> labelTacheMap = new HashMap<>();
+		labelTacheMap.put(idPenalite, new RawTacheReception(ControllerVideo.PORT_PRENALITE));
+		labelTacheMap.put(idChrono, new RawTacheReception(ControllerVideo.PORT_CHRONO));
+		labelTacheMap.put(idLieu, new RawTacheReception(ControllerVideo.PORT_LIEU));
+		labelTacheMap.put(idDossard, new RawTacheReception(ControllerVideo.PORT_DOSSARD));
+		labelTacheMap.put(idNumeroEpreuve, new RawTacheReception(ControllerVideo.PORT_NUMERO_EPREUVE));
+		labelTacheMap.forEach(this::bind);
+
+		JsonTacheReception<JsonCheval> tacheCheval = new JsonTacheReception<>(PORT_CHEVAL_JSON, JsonCheval.class);
+		JsonCheval json  = tacheCheval.getObject();
+
+		final Thread chavalThread = new Thread(tacheCheval);
+		chavalThread.setDaemon(true);
+		chavalThread.start();
+
+		this.bind(idNomCheval, json.getChevalName());
+		this.bind(idRaceCheval, json.getRace());
+		this.bind(idPereCheval, json.getPere(), value -> "Père : " + value);
+		this.bind(idMereCheval, json.getMere(), value -> "Mère : " + value);
+		this.bind(idPereMereCheval, json.getPereMere(), value -> "Père de mère : " + value);
+		this.bind(idNomCavalier, json.getCavalier(), (value) -> {
+			String[] parts = value.split(" ", -1);
+			String nom = parts.length == 2 ? parts[1].split("_")[0] : "";
+			return nom.toUpperCase();
+		});
+		this.bind(idPrenomCavalier, json.getCavalier(), (value) -> {
+			String[] parts = value.split("_");
+			String prenom = parts.length > 1 ? parts[parts.length - 1] : value;
+			return capitalizeFirstOnly(prenom);
+		});
+
+		// gestion visibilité pane principaux
 
 		idGridpaneChrono.visibleProperty().bind(idChrono.visibleProperty());
 		idChrono.visibleProperty().addListener(addFadeTransition(idGridpaneChrono));
@@ -125,6 +148,12 @@ public class ControllerVideo implements Initializable {
 		for (final Label label : labelTacheMap.keySet()) {
 			allLabelsVisible = Bindings.or(allLabelsVisible, label.visibleProperty());
 		}
+		allLabelsVisible = Bindings.or(allLabelsVisible, idNomCheval.visibleProperty())
+				.or(idRaceCheval.visibleProperty())
+				.or(idPereCheval.visibleProperty())
+				.or(idMereCheval.visibleProperty())
+				.or(idPereMereCheval.visibleProperty())
+				.or(idNomCavalier.visibleProperty());
 		idGridpaneInfo.visibleProperty().bind(allLabelsVisible);
 		allLabelsVisible.addListener(addFadeTransition(idGridpaneInfo));
 
@@ -175,9 +204,14 @@ public class ControllerVideo implements Initializable {
 			idImageChrono.setFitHeight(size);
 		});
 
+		AtomicReference<Scene> atomicScene = new AtomicReference<>();
+		idAnchorBase.sceneProperty().addListener((obs, oldV, newV) -> {
+			atomicScene.set(newV);
+		});
+
 		// gestion de la taille du texte des labels
 		idLieu.widthProperty().addListener((obs, oldV, newV) -> {
-			setLabelTextSize(idLieu, 16);
+			setLabelTextSize(idLieu, 16, atomicScene.get().getWidth());
 		});
 
 		// Lancement des process de récéption
@@ -188,29 +222,25 @@ public class ControllerVideo implements Initializable {
 		});
 	}
 
-	private void setLabelTextSize(final Label label, final int defaultSize) {
+	private void setLabelTextSize(final Label label, final int defaultSize, double sceneWidth) {
 		final double height = label.getHeight();
-		final double width = label.getWidth();
-		final double heightRatio = height/ ControllerVideo.BASE_HEIGHT;
-		final double widthRatio = width/ ControllerVideo.BASE_WIDTH;
+        final double widthRatio = sceneWidth/ControllerVideo.BASE_WIDTH;
 
-		final double textWidth = Math.max(height, widthRatio * defaultSize);
+		final double textWidth = Math.min(height, widthRatio * defaultSize);
 
-		//		label.setFont(Font.font(label.getFont().getFamily(), textWidth));
+		label.setFont(Font.font(label.getFont().getFamily(), textWidth));
 		//		System.out.println("height ratio : " + heightRatio );
 		//		System.out.println("text width : " + textWidth);
-		System.out.println("result : " + ControllerVideo.calculateMaxFontSize(label.getText(), label.getFont().getFamily(), label.getWidth(), 16));
+		System.out.println("result : " + textWidth);
 	}
 
 	public static double calculateMaxFontSize(final String text, final String fontFamily, final double maxWidth, final double baseFontSize) {
 		final Text helperText = new Text(text);
 		helperText.setFont(Font.font(fontFamily, baseFontSize));
 
-		// Mesure la largeur actuelle du texte
 		final double textWidth = helperText.getLayoutBounds().getWidth();
 		System.out.println("textWidth : " + textWidth);
 		System.out.println("baseFontSize : " + baseFontSize);
-		// Si le texte tient déjà, retourne la taille de base
 		if (textWidth <= maxWidth) {
 			return baseFontSize;
 		}
@@ -234,10 +264,47 @@ public class ControllerVideo implements Initializable {
 		};
 	}
 
-	private void bind(final Label label, final TacheReception tacheReception) {
+	private String capitalizeFirstOnly(String value) {
+		if(value == null) {
+			return null;
+		}
+		if(value.trim().isEmpty()) {
+			return "";
+		}
+
+		return value.substring(0, 1).toUpperCase() + value.substring(1).toLowerCase();
+	}
+
+	private void bind(final Label label, final RawTacheReception tacheReception) {
 		label.textProperty().bind(tacheReception.valueProperty());
+		setVisibilityEvent(label);
+	}
+
+	private void bind(Label label, StringObsProperty stringObsProperty, Function<String, String> supplier) {
+		label.textProperty().bind(Bindings.createStringBinding(() -> {
+			StringProperty property = stringObsProperty.getValue();
+			if(property == null) {
+				return "";
+			}
+
+			String value = property.getValue();
+			if(value == null || value.trim().isEmpty()) {
+				return "";
+			}
+
+			return supplier.apply(property.get());
+		}, stringObsProperty.getValue()));
+		this.setVisibilityEvent(label);
+	}
+
+	private void bind(Label label, StringObsProperty stringProperty) {
+		label.textProperty().bind(stringProperty.getValue());
+		setVisibilityEvent(label);
+	}
+
+	private void setVisibilityEvent(Label label)  {
 		label.visibleProperty().bind(Bindings.when(
-				label.textProperty().isEmpty().or(label.textProperty().isEqualTo("0").or(label.textProperty().isEqualTo("0.0").or(label.textProperty().isEqualTo("0.00")))))
+						label.textProperty().isEmpty().or(label.textProperty().isEqualTo("0").or(label.textProperty().isEqualTo("0.0").or(label.textProperty().isEqualTo("0.00")))))
 				.then(false)
 				.otherwise(true));
 		label.visibleProperty().addListener((obs, oldV, newV) -> {
