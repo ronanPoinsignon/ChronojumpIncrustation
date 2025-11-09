@@ -10,6 +10,8 @@ import java.util.function.Function;
 import javafx.animation.FadeTransition;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
@@ -26,6 +28,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -205,14 +208,27 @@ public class ControllerVideo implements Initializable {
 		});
 
 		AtomicReference<Scene> atomicScene = new AtomicReference<>();
-		idAnchorBase.sceneProperty().addListener((obs, oldV, newV) -> {
-			atomicScene.set(newV);
+		idAnchorBase.sceneProperty().addListener((obsScene, oldVScene, newScene) -> {
+			atomicScene.set(newScene);
+			newScene.windowProperty().addListener((obsWindow, oldWindow, newWindow) -> {
+				Stage stage = (Stage) newWindow;
+				stage.setOnShown(event -> {
+					newScene.getRoot().requestLayout();
+				});
+			});
 		});
-
-		// gestion de la taille du texte des labels
-		idLieu.widthProperty().addListener((obs, oldV, newV) -> {
-			setLabelTextSize(idLieu, 16, atomicScene.get().getWidth());
-		});
+		this.bindLabelSize(idLieu, 16,atomicScene);
+		this.bindLabelSize(idNumeroEpreuve, 16,atomicScene);
+		this.bindLabelSize(idPereCheval, 16,atomicScene);
+		this.bindLabelSize(idMereCheval, 16,atomicScene);
+		this.bindLabelSize(idPereMereCheval, 16,atomicScene);
+		this.bindLabelSize(idPrenomCavalier, 16,atomicScene);
+		this.bindLabelSize(idNomCavalier, 16,atomicScene);
+		this.bindLabelSize(idPenalite, 23,atomicScene);
+		this.bindLabelSize(idNomCheval, 23,atomicScene);
+		this.bindLabelSize(idRaceCheval, 23,atomicScene);
+		this.bindLabelSize(idDossard, 23,atomicScene);
+		this.bindLabelSize(idChrono, 23,atomicScene);
 
 		// Lancement des process de récéption
 		labelTacheMap.values().forEach(tache -> {
@@ -222,32 +238,28 @@ public class ControllerVideo implements Initializable {
 		});
 	}
 
+	private void bindLabelSize(Label label, int defaultSize, AtomicReference<Scene> atomicScene) {
+		ChangeListener<? super Number> listener = (obs, oldV, newV) -> {
+			if(atomicScene.get() == null) {
+				return;
+			}
+
+			double width = atomicScene.get().getWidth();
+			if(width == 0) {
+				return;
+			}
+
+			setLabelTextSize(label, defaultSize, atomicScene.get().getWidth());
+		};
+		label.widthProperty().addListener(listener);
+		label.heightProperty().addListener(listener);
+	}
+
 	private void setLabelTextSize(final Label label, final int defaultSize, double sceneWidth) {
 		final double height = label.getHeight();
         final double widthRatio = sceneWidth/ControllerVideo.BASE_WIDTH;
-
 		final double textWidth = Math.min(height, widthRatio * defaultSize);
-
-		label.setFont(Font.font(label.getFont().getFamily(), textWidth));
-		//		System.out.println("height ratio : " + heightRatio );
-		//		System.out.println("text width : " + textWidth);
-		System.out.println("result : " + textWidth);
-	}
-
-	public static double calculateMaxFontSize(final String text, final String fontFamily, final double maxWidth, final double baseFontSize) {
-		final Text helperText = new Text(text);
-		helperText.setFont(Font.font(fontFamily, baseFontSize));
-
-		final double textWidth = helperText.getLayoutBounds().getWidth();
-		System.out.println("textWidth : " + textWidth);
-		System.out.println("baseFontSize : " + baseFontSize);
-		if (textWidth <= maxWidth) {
-			return baseFontSize;
-		}
-
-		// Sinon, calcule la taille maximale proportionnelle
-
-		return maxWidth / textWidth * baseFontSize;
+		label.setFont(Font.font(label.getFont().getFamily(), FontWeight.findByName(label.getFont().getStyle()), widthRatio * defaultSize));
 	}
 
 	private ChangeListener<? super Boolean> addFadeTransition(final Node node) {
