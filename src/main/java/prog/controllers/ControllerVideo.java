@@ -84,6 +84,8 @@ public class ControllerVideo implements Initializable {
 	@FXML
 	private Label idNomCavalier;
 	@FXML
+	private ImageView idImageCavalier;
+	@FXML
 	private ImageView idLogo;
 	@FXML
 	private ImageView idImageChrono;
@@ -174,38 +176,6 @@ public class ControllerVideo implements Initializable {
 		});
 		GridPane.setFillWidth(idImageChrono, false);
 		GridPane.setFillHeight(idImageChrono, false);
-		idGridpaneChrono.widthProperty().addListener((obs, oldV, newV) -> {
-			final ColumnConstraints colConstraints = idGridpaneChrono.getColumnConstraints().get(0);
-			final RowConstraints rowConstraints = idGridpaneChrono.getRowConstraints().get(0);
-
-			final double cellWidth = colConstraints.getPrefWidth() == Region.USE_COMPUTED_SIZE ?
-					idGridpaneChrono.getWidth() * (colConstraints.getPercentWidth() / 100) :
-						colConstraints.getPrefWidth();
-
-			final double cellHeight = rowConstraints.getPrefHeight() == Region.USE_COMPUTED_SIZE ?
-					idGridpaneChrono.getHeight() * (rowConstraints.getPercentHeight() / 100) :
-						rowConstraints.getPrefHeight();
-
-			final double size = Math.min(cellWidth, cellHeight);
-
-			idImageChrono.setFitWidth(size);
-		});
-		idGridpaneChrono.heightProperty().addListener((obs, oldV, newV) -> {
-			final ColumnConstraints colConstraints = idGridpaneChrono.getColumnConstraints().get(0);
-			final RowConstraints rowConstraints = idGridpaneChrono.getRowConstraints().get(0);
-
-			final double cellWidth = colConstraints.getPrefWidth() == Region.USE_COMPUTED_SIZE ?
-					idGridpaneChrono.getWidth() * (colConstraints.getPercentWidth() / 100) :
-						colConstraints.getPrefWidth();
-
-			final double cellHeight = rowConstraints.getPrefHeight() == Region.USE_COMPUTED_SIZE ?
-					idGridpaneChrono.getHeight() * (rowConstraints.getPercentHeight() / 100) :
-						rowConstraints.getPrefHeight();
-
-			final double size = Math.min(cellWidth, cellHeight);
-
-			idImageChrono.setFitHeight(size);
-		});
 
 		AtomicReference<Scene> atomicScene = new AtomicReference<>();
 		idAnchorBase.sceneProperty().addListener((obsScene, oldVScene, newScene) -> {
@@ -215,6 +185,14 @@ public class ControllerVideo implements Initializable {
 				stage.setOnShown(event -> {
 					newScene.getRoot().requestLayout();
 				});
+			});
+			newScene.widthProperty().addListener((obs, oldV, newV) -> {
+				idImageChrono.setFitWidth(35 * newV.doubleValue() / BASE_WIDTH);
+				idImageCavalier.setFitWidth(35 * newV.doubleValue() / BASE_WIDTH);
+			});
+			newScene.heightProperty().addListener((obs, oldV, newV) -> {
+				idImageChrono.setFitWidth(35 * newScene.getWidth() / BASE_WIDTH);
+				idImageCavalier.setFitWidth(35 * newScene.getWidth() / BASE_WIDTH);
 			});
 		});
 		this.bindLabelSize(idLieu, 16,atomicScene);
@@ -251,6 +229,7 @@ public class ControllerVideo implements Initializable {
 
 			setLabelTextSize(label, defaultSize, atomicScene.get().getWidth());
 		};
+
 		label.widthProperty().addListener(listener);
 		label.heightProperty().addListener(listener);
 	}
