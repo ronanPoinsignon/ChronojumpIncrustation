@@ -10,8 +10,6 @@ import java.util.function.Function;
 import javafx.animation.FadeTransition;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
@@ -23,17 +21,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import prog.observableproperties.StringObsProperty;
 import prog.observableproperties.json.JsonCheval;
+import prog.observableproperties.json.JsonEpreuve;
 import prog.transmission.AbstractTacheReception;
 import prog.transmission.JsonTacheReception;
 import prog.transmission.RawTacheReception;
@@ -43,13 +38,11 @@ public class ControllerVideo implements Initializable {
 //	private static final String INIT_IP_ADRESSE = "192.168.1.31";
 	private static final String INIT_IP_ADRESSE = "169.254.122.66";
 
+	private static final int PORT_LIEU_EPREUVE = 8090;				// port incruste lieu + numéro épreuve
 	private static final int PORT_CHEVAL_JSON = 8091;				// port incruste cheval
 	private static final int PORT_PRENALITE = 8092;					// port incruste penalite
 	private static final int PORT_CHRONO = 8093;					// port incruste chrono
 	private static final int PORT_DOSSARD = 8094;					// port incruste dossard
-
-	private static final int PORT_LIEU = 8095; 						// port incruste lieu
-	private static final int PORT_NUMERO_EPREUVE = 8101;			// port incruste lieu
 
 	private static final int FADE_DURATION = 200;
 
@@ -116,10 +109,14 @@ public class ControllerVideo implements Initializable {
 		final Map<Label, RawTacheReception> labelTacheMap = new HashMap<>();
 		labelTacheMap.put(idPenalite, new RawTacheReception(ControllerVideo.PORT_PRENALITE));
 		labelTacheMap.put(idChrono, new RawTacheReception(ControllerVideo.PORT_CHRONO));
-		labelTacheMap.put(idLieu, new RawTacheReception(ControllerVideo.PORT_LIEU));
 		labelTacheMap.put(idDossard, new RawTacheReception(ControllerVideo.PORT_DOSSARD));
-		labelTacheMap.put(idNumeroEpreuve, new RawTacheReception(ControllerVideo.PORT_NUMERO_EPREUVE));
 		labelTacheMap.forEach(this::bind);
+
+		JsonTacheReception<JsonEpreuve> tacheLieu = new JsonTacheReception<>(ControllerVideo.PORT_LIEU_EPREUVE, JsonEpreuve.class);
+		JsonEpreuve epreuve = tacheLieu.getObject();
+		bind(idLieu, epreuve.getLieu());
+		bind(idNumeroEpreuve, epreuve.getNumero());
+
 
 		JsonTacheReception<JsonCheval> tacheCheval = new JsonTacheReception<>(PORT_CHEVAL_JSON, JsonCheval.class);
 		JsonCheval json  = tacheCheval.getObject();
@@ -214,6 +211,9 @@ public class ControllerVideo implements Initializable {
 			t.setDaemon(true);
 			t.start();
 		});
+		final Thread t = new Thread(tacheLieu);
+		t.setDaemon(true);
+		t.start();
 	}
 
 	private void bindLabelSize(Label label, int defaultSize, AtomicReference<Scene> atomicScene) {
@@ -279,18 +279,22 @@ public class ControllerVideo implements Initializable {
 			}
 
 			String value = property.getValue();
-			if(value == null || value.trim().isEmpty()) {
+			if(value == null) {
 				return "";
 			}
 
-			return supplier.apply(property.get());
+			String trimValue = property.getValue().trim();
+			if(trimValue.isEmpty()) {
+				return "";
+			}
+
+			return supplier.apply(trimValue);
 		}, stringObsProperty.getValue()));
 		this.setVisibilityEvent(label);
 	}
 
 	private void bind(Label label, StringObsProperty stringProperty) {
-		label.textProperty().bind(stringProperty.getValue());
-		setVisibilityEvent(label);
+		bind(label, stringProperty, String::trim);
 	}
 
 	private void setVisibilityEvent(Label label)  {
