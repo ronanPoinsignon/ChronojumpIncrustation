@@ -45,6 +45,8 @@ public class ObsPropertyDeserializer<T> extends JsonDeserializer<T> implements C
                     Method setValue = obsProperty.getClass().getMethod("setValue", String.class);
                     setValue.invoke(obsProperty, value);
 
+                } catch(NoSuchMethodException e) {
+
                 } catch (Exception e) {
                     throw new RuntimeException("Erreur lors de la désérialisation du champ " + fieldName, e);
                 }
