@@ -73,11 +73,25 @@ public abstract class AbstractTacheReception<T> extends Task<T> {
 			info = new char[10000];
 			resultat = resultat.trim();
 			if(!resultat.isEmpty() && !resultat.equals(reponsePrec)) {
-				updateValue(convert(resultat));
+				updateValue(convert(parseQuote(resultat)));
 				reponsePrec = resultat;
 			}
 			//socket.sendUrgentData(1); //remettre cette ligne fait crash l'application après 15 read pour une raison inconnue
 		}
+	}
+
+	/**
+	 * Remplace les doubles quotes dans les strings dans les formats json pour éviter une erreur lors de la lecture
+	 * @param value
+	 * @return
+	 */
+	private String parseQuote(String value) {
+		if(value == null) {
+			return null;
+		}
+
+		String toReplace = "″";
+		return value.replaceAll("(?<![:(, *){])\"(?![,:}])", toReplace);
 	}
 
 	protected abstract T convert(String value);
