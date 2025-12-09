@@ -58,15 +58,16 @@ public abstract class AbstractTacheReception<T> extends Task<T> {
 	}
 
 	public void lireDonnees() throws IOException {
-		byte[] info = new byte[10000];
+		char[] info = new char[10000];
 		InputStream input;
 		String reponsePrec = "";
 		String resultat;
 		input = socket.getInputStream();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
 		while(true) {
-			input.read(info);
+			reader.read(info);
 			resultat = new String(info);
-			info = new byte[10000];
+			info = new char[10000];
 			resultat = resultat.trim();
 			if(!resultat.isEmpty() && !resultat.equals(reponsePrec)) {
 				updateValue(convert(resultat));
