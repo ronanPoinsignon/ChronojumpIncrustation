@@ -174,8 +174,6 @@ public class ControllerVideo implements Initializable {
 			idLogo.setFitHeight(newV.doubleValue());
 			idLogo.setFitWidth(newV.doubleValue() * ((double) 73/88));
 		});
-		GridPane.setFillWidth(idImageChrono, false);
-		GridPane.setFillHeight(idImageChrono, false);
 
 		AtomicReference<Scene> atomicScene = new AtomicReference<>();
 		idAnchorBase.sceneProperty().addListener((obsScene, oldVScene, newScene) -> {
