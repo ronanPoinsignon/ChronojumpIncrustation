@@ -29,8 +29,5 @@ public class App extends Application {
 		//		stage.initStyle(StageStyle.UNDECORATED);
 		stage.setScene(scene);
 		stage.show();
-		final ControllerVideo controller = loader.getController();
-		controller.addevent(stage);
-		//		controller.setDimension(stage);
 	}
 }

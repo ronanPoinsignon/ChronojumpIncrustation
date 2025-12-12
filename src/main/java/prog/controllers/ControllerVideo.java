@@ -183,6 +183,7 @@ public class ControllerVideo implements Initializable {
 				stage.setOnShown(event -> {
 					newScene.getRoot().requestLayout();
 				});
+				addevent(stage);
 			});
 			newScene.widthProperty().addListener((obs, oldV, newV) -> {
 				idImageChrono.setFitWidth(35 * newV.doubleValue() / BASE_WIDTH);
