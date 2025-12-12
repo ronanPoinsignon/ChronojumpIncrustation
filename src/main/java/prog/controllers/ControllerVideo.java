@@ -238,9 +238,7 @@ public class ControllerVideo implements Initializable {
 	}
 
 	private void setLabelTextSize(final Label label, final int defaultSize, double sceneWidth) {
-		final double height = label.getHeight();
         final double widthRatio = sceneWidth/ControllerVideo.BASE_WIDTH;
-		final double textWidth = Math.min(height, widthRatio * defaultSize);
 		label.setFont(Font.font(label.getFont().getFamily(), FontWeight.findByName(label.getFont().getStyle()), widthRatio * defaultSize));
 	}
 
