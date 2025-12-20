@@ -37,9 +37,9 @@
                   <RowConstraints />
                   </rowConstraints>
                   <children>
-                  <Pane GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Pane fx:id="idPaneChrono" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <children>
-                            <ImageView fx:id="idLogo" fitHeight="109.0" layoutX="20.0" pickOnBounds="true" preserveRatio="true">
+                            <ImageView fx:id="idLogo" fitWidth="100.0" layoutX="20.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
                                     <Image url="@../images/shf_logo.png" />
                                 </image>

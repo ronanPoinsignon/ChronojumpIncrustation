@@ -22,6 +22,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -83,6 +84,8 @@ public class ControllerVideo implements Initializable {
 	private ImageView idImageCavalier;
 	@FXML
 	private ImageView idLogo;
+	@FXML
+	private Pane idPaneChrono;
 	@FXML
 	private ImageView idImageChrono;
 	@FXML
@@ -163,7 +166,8 @@ public class ControllerVideo implements Initializable {
 		allLabelsVisible.addListener(addFadeTransition(idGridpaneInfo));
 
 		//		Gestion responsive
-		idLogo.fitHeightProperty().bind(idGridpaneEpreuve.heightProperty());
+		idLogo.fitWidthProperty().bind(idPaneChrono.widthProperty().multiply(0.8));
+		idLogo.layoutXProperty().bind(idPaneChrono.widthProperty().multiply(0.5).subtract(idLogo.fitWidthProperty().divide(2)));
 
 		AtomicReference<Scene> atomicScene = new AtomicReference<>();
 		idAnchorBase.sceneProperty().addListener((obsScene, oldVScene, newScene) -> {
