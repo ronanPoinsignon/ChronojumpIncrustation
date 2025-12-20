@@ -56,7 +56,7 @@
                               <RowConstraints percentHeight="50.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                           <children>
-                              <Label fx:id="idNumeroEpreuve" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #004C66; -fx-background-radius: 10%;" text="15" textFill="WHITE" GridPane.rowIndex="1">
+                              <Label fx:id="idNumeroEpreuve" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" style="-fx-background-color: #004C66; -fx-background-radius: 10%;" text="15" textFill="WHITE" GridPane.rowIndex="1">
                                   <font>
                                       <Font name="Arial Bold" size="16.0" />
                                   </font>
@@ -74,7 +74,7 @@
                               <RowConstraints percentHeight="50.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                           <children>
-                              <Label fx:id="idLieu" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="LIEU DE L'EPREUVE" textFill="WHITE">
+                              <Label fx:id="idLieu" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" text="LIEU DE L'EPREUVE" textFill="WHITE">
                                   <font>
                                       <Font name="Arial Bold" size="16.0" />
                                   </font>
@@ -112,7 +112,7 @@
                               <RowConstraints percentHeight="100.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                           <children>
-                              <Label fx:id="idChrono" alignment="CENTER" contentDisplay="TEXT_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="20.56" textFill="WHITE" GridPane.columnIndex="1">
+                              <Label fx:id="idChrono" alignment="CENTER" contentDisplay="TEXT_ONLY" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" text="20.56" textFill="WHITE" GridPane.columnIndex="1">
                                   <font>
                                       <Font name="Arial Bold" size="23.0" />
                                   </font>
@@ -137,7 +137,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                           <children>
-                              <Label fx:id="idPenalite" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #009EE2; -fx-background-radius: 10% 0% 0% 10%;" text="4 pts" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                              <Label fx:id="idPenalite" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" style="-fx-background-color: #009EE2; -fx-background-radius: 10% 0% 0% 10%;" text="4 pts" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                                   <font>
                                       <Font name="Arial Bold" size="23.0" />
                                   </font>
@@ -171,7 +171,7 @@
                               <RowConstraints percentHeight="10.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                           <children>
-                              <Label fx:id="idDossard" alignment="CENTER" contentDisplay="BOTTOM" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: WHITE; -fx-background-radius: 10%;" text="234" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                              <Label fx:id="idDossard" alignment="CENTER" contentDisplay="BOTTOM" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" style="-fx-background-color: WHITE; -fx-background-radius: 10%;" text="234" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                   <font>
                                       <Font name="Arial Bold" size="23.0" />
                                   </font>
@@ -193,7 +193,7 @@
                               <RowConstraints percentHeight="10.0" vgrow="ALWAYS" />
                           </rowConstraints>
                           <children>
-                              <Label fx:id="idNomCheval" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="NOM DU CHEVAL" textFill="WHITE" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                              <Label fx:id="idNomCheval" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" text="NOM DU CHEVAL" textFill="WHITE" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                   <font>
                                       <Font name="Arial Bold" size="23.0" />
                                   </font>
@@ -201,7 +201,7 @@
                                       <Insets left="20.0" />
                                   </GridPane.margin>
                               </Label>
-                              <Label fx:id="idRaceCheval" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="CODE RACE" textFill="WHITE" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                              <Label fx:id="idRaceCheval" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" text="CODE RACE" textFill="WHITE" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                                   <font>
                                       <Font name="Arial Bold" size="23.0" />
                                   </font>
@@ -221,17 +221,17 @@
                               <RowConstraints percentHeight="33.33333" vgrow="SOMETIMES" />
                           </rowConstraints>
                           <children>
-                              <Label fx:id="idPereCheval" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Père : Nom du père" textFill="WHITE" GridPane.valignment="CENTER">
+                              <Label fx:id="idPereCheval" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" text="Père : Nom du père" textFill="WHITE" GridPane.valignment="CENTER">
                                   <font>
                                       <Font name="Arial Bold" size="16.0" />
                                   </font>
                               </Label>
-                              <Label fx:id="idMereCheval" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Mère : Nom de la mère" textFill="WHITE" GridPane.rowIndex="1">
+                              <Label fx:id="idMereCheval" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" text="Mère : Nom de la mère" textFill="WHITE" GridPane.rowIndex="1">
                                   <font>
                                       <Font name="Arial Bold" size="16.0" />
                                   </font>
                               </Label>
-                              <Label fx:id="idPereMereCheval" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Père de mère : Nom du père de mère" textFill="WHITE" GridPane.rowIndex="2">
+                              <Label fx:id="idPereMereCheval" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" text="Père de mère : Nom du père de mère" textFill="WHITE" GridPane.rowIndex="2">
                                   <font>
                                       <Font name="Arial Bold" size="16.0" />
                                   </font>
@@ -258,7 +258,7 @@
                               <RowConstraints percentHeight="15.0" valignment="TOP" vgrow="SOMETIMES" />
                           </rowConstraints>
                           <children>
-                              <Label fx:id="idPrenomCavalier" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Prénom cavalier" textFill="WHITE" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                              <Label fx:id="idPrenomCavalier" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" text="Prénom cavalier" textFill="WHITE" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                   <font>
                                       <Font name="Arial Bold" size="16.0" />
                                   </font>
