@@ -163,36 +163,14 @@ public class ControllerVideo implements Initializable {
 		allLabelsVisible.addListener(addFadeTransition(idGridpaneInfo));
 
 		//		Gestion responsive
-		idGridpaneInfo.prefHeightProperty().bind(idAnchorBase.heightProperty().multiply(ControllerVideo.PANEL_INFO_COUREUR_HEIGHT_PERCENTAGE));
-		idGridpaneEpreuve.prefHeightProperty().bind(idAnchorBase.heightProperty().multiply(ControllerVideo.PANEL_INFO_EPREUVE_HEIGHT_PERCENTAGE));
-
-		idAnchorBase.heightProperty().addListener((obs, oldV, newV) -> {
-			final double heightRatio = newV.doubleValue()/ ControllerVideo.BASE_HEIGHT;
-			AnchorPane.setTopAnchor(idGridpaneEpreuve, 33 * heightRatio);
-		});
-		idGridpaneEpreuve.heightProperty().addListener((obs, oldV, newV) -> {
-			idLogo.setFitHeight(newV.doubleValue());
-			idLogo.setFitWidth(newV.doubleValue() * ((double) 73/88));
-		});
+		idLogo.fitHeightProperty().bind(idGridpaneEpreuve.heightProperty());
 
 		AtomicReference<Scene> atomicScene = new AtomicReference<>();
 		idAnchorBase.sceneProperty().addListener((obsScene, oldVScene, newScene) -> {
 			atomicScene.set(newScene);
-			newScene.windowProperty().addListener((obsWindow, oldWindow, newWindow) -> {
-				Stage stage = (Stage) newWindow;
-				stage.setOnShown(event -> {
-					newScene.getRoot().requestLayout();
-				});
-				addevent(stage);
-			});
-			newScene.widthProperty().addListener((obs, oldV, newV) -> {
-				idImageChrono.setFitWidth(35 * newV.doubleValue() / BASE_WIDTH);
-				idImageCavalier.setFitWidth(35 * newV.doubleValue() / BASE_WIDTH);
-			});
-			newScene.heightProperty().addListener((obs, oldV, newV) -> {
-				idImageChrono.setFitWidth(35 * newScene.getWidth() / BASE_WIDTH);
-				idImageCavalier.setFitWidth(35 * newScene.getWidth() / BASE_WIDTH);
-			});
+			newScene.windowProperty().addListener((obsWindow, oldWindow, newWindow) -> addevent((Stage) newWindow));
+			idImageChrono.fitWidthProperty().bind(newScene.widthProperty().multiply(35).divide(BASE_WIDTH));
+			idImageCavalier.fitWidthProperty().bind(newScene.widthProperty().multiply(35).divide(BASE_WIDTH));
 		});
 		this.bindLabelSize(idLieu, 16,atomicScene);
 		this.bindLabelSize(idIdentite, 14,atomicScene);
