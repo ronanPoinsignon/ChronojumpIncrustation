@@ -168,7 +168,7 @@ public class ControllerVideo implements Initializable {
 		AtomicReference<Scene> atomicScene = new AtomicReference<>();
 		idAnchorBase.sceneProperty().addListener((obsScene, oldVScene, newScene) -> {
 			atomicScene.set(newScene);
-			newScene.windowProperty().addListener((obsWindow, oldWindow, newWindow) -> addevent((Stage) newWindow));
+			newScene.windowProperty().addListener((obsWindow, oldWindow, newWindow) -> addEvent((Stage) newWindow));
 			idImageChrono.fitWidthProperty().bind(newScene.widthProperty().multiply(35).divide(BASE_WIDTH));
 			idImageCavalier.fitWidthProperty().bind(newScene.widthProperty().multiply(35).divide(BASE_WIDTH));
 		});
@@ -294,7 +294,7 @@ public class ControllerVideo implements Initializable {
 		});
 	}
 
-	public void addevent(final Stage stage) {
+	public void addEvent(final Stage stage) {
 		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		stage.getScene().setOnKeyPressed(evt -> {
 			if(evt.getCode() == KeyCode.F12 || isFullScreen && evt.getCode() == KeyCode.ESCAPE) {
