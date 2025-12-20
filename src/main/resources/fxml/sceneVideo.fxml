@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="idAnchorBase" maxHeight="724.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="724.0" prefWidth="865.0" style="-fx-cursor: disapear; -fx-background-color: #006400;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prog.controllers.ControllerVideo">
+<AnchorPane fx:id="idAnchorBase" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="725.0" prefWidth="1283.0" style="-fx-cursor: disapear; -fx-background-color: #006400;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prog.controllers.ControllerVideo">
     <children>
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -24,7 +24,7 @@
           <RowConstraints percentHeight="15.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-              <GridPane fx:id="idGridpaneEpreuve" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="SOMETIMES">
+              <GridPane fx:id="idGridpaneEpreuve" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="SOMETIMES">
                   <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" percentWidth="10.0" />
                       <ColumnConstraints hgrow="SOMETIMES" percentWidth="4.0" />
@@ -117,7 +117,7 @@
                                       <Font name="Arial Bold" size="23.0" />
                                   </font>
                               </Label>
-                        <Pane prefHeight="200.0" prefWidth="200.0">
+                        <Pane>
                            <children>
                                     <ImageView fx:id="idImageChrono" layoutX="8.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
                                         <image>
@@ -238,7 +238,7 @@
                               </Label>
                           </children>
                       </GridPane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Pane GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <children>
                             <ImageView fx:id="idImageCavalier" fitHeight="92.0" fitWidth="57.0" layoutX="3.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
