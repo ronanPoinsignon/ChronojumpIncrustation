@@ -316,14 +316,14 @@ public class ControllerVideo implements Initializable {
 		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		stage.getScene().setOnKeyPressed(evt -> {
 			if(evt.getCode() == KeyCode.F12 || isFullScreen && evt.getCode() == KeyCode.ESCAPE) {
-				setFullScreen(stage);
+				switchFullScreen(stage);
 			}
 		});
 		idAnchorBase.setOnMousePressed(evt -> {
 			coordX = evt.getX();
 			coordY = evt.getY();
 			if(evt.getClickCount()%2 == 0) {
-				setFullScreen(stage);
+				switchFullScreen(stage);
 			}
 		});
 		idAnchorBase.setOnMouseDragged(evt -> {
@@ -336,7 +336,7 @@ public class ControllerVideo implements Initializable {
 		});
 	}
 
-	public void setFullScreen(final Stage stage) {
+	public void switchFullScreen(final Stage stage) {
 		stage.setFullScreen(isFullScreen = !isFullScreen);
 	}
 
