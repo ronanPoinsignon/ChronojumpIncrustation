@@ -26,7 +26,8 @@ public class App extends Application {
 		final FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/sceneVideo.fxml"));
 		final Parent sceneVideo = loader.load();
 		final Scene scene = new Scene(sceneVideo);
-		//		stage.initStyle(StageStyle.UNDECORATED);
+		stage.setMinWidth(640);
+		stage.setMinHeight(360);
 		stage.setScene(scene);
 		stage.show();
 	}
