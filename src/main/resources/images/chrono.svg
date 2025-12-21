@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200" height="200">
+    <!-- Cercle principal -->
+    <circle
+            cx="50"
+            cy="55"
+            r="35"
+            fill="none"
+            stroke="#00AEEF"
+            stroke-width="6"
+    />
+
+    <!-- Bouton du chronomètre (haut) -->
+    <rect
+            x="42"
+            y="8"
+            width="16"
+            height="10"
+            rx="3"
+            fill="#00AEEF"
+    />
+
+    <!-- Languette en haut à droite -->
+    <rect
+            x="70"
+            y="18"
+            width="12"
+            height="6"
+            rx="3"
+            transform="rotate(30 70 18)"
+            fill="#00AEEF"
+    />
+
+    <!-- Aiguille -->
+    <line
+            x1="50"
+            y1="55"
+            x2="50"
+            y2="32"
+            stroke="#00AEEF"
+            stroke-width="5"
+            stroke-linecap="round"
+    />
+
+    <!-- Point central -->
+    <circle
+            cx="50"
+            cy="55"
+            r="3"
+            fill="#00AEEF"
+    />
+</svg>

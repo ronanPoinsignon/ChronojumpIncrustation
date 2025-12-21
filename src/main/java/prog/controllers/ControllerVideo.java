@@ -83,11 +83,15 @@ public class ControllerVideo implements Initializable {
 	@FXML
 	private ImageView idImageCavalier;
 	@FXML
+	private Pane idPaneCavalier;
+	@FXML
 	private ImageView idLogo;
 	@FXML
-	private Pane idPaneChrono;
+	private Pane idPaneLogo;
 	@FXML
 	private ImageView idImageChrono;
+	@FXML
+	private Pane idPaneChrono;
 	@FXML
 	private GridPane idGridpaneChrono;
 	@FXML
@@ -166,16 +170,26 @@ public class ControllerVideo implements Initializable {
 		allLabelsVisible.addListener(addFadeTransition(idGridpaneInfo));
 
 		//		Gestion responsive
-		idLogo.fitWidthProperty().bind(idPaneChrono.widthProperty().multiply(0.8));
-		idLogo.layoutXProperty().bind(idPaneChrono.widthProperty().multiply(0.5).subtract(idLogo.fitWidthProperty().divide(2)));
+		idLogo.fitWidthProperty().bind(idPaneLogo.widthProperty().multiply(0.8));
+		idLogo.layoutXProperty().bind(idPaneLogo.widthProperty().multiply(0.5).subtract(idLogo.fitWidthProperty().divide(2)));
 
 		AtomicReference<Scene> atomicScene = new AtomicReference<>();
 		idAnchorBase.sceneProperty().addListener((obsScene, oldVScene, newScene) -> {
 			atomicScene.set(newScene);
 			newScene.windowProperty().addListener((obsWindow, oldWindow, newWindow) -> addEvent((Stage) newWindow));
+
 			idImageChrono.fitWidthProperty().bind(newScene.widthProperty().multiply(35).divide(BASE_WIDTH));
-			idImageCavalier.fitWidthProperty().bind(newScene.widthProperty().multiply(35).divide(BASE_WIDTH));
+			idImageChrono.fitHeightProperty().bind(newScene.widthProperty().multiply(35).divide(BASE_WIDTH));
+
+			idImageCavalier.fitWidthProperty().bind(newScene.widthProperty().multiply(64).divide(BASE_WIDTH));
+			idImageCavalier.fitHeightProperty().bind(newScene.widthProperty().multiply(64).divide(BASE_WIDTH));
 		});
+
+		idImageChrono.layoutXProperty().bind(idPaneChrono.widthProperty().multiply(0.5).subtract(idImageChrono.fitWidthProperty().divide(2)));
+		idImageChrono.layoutYProperty().bind(idPaneChrono.heightProperty().multiply(0.5).subtract(idImageChrono.fitHeightProperty().divide(2)));
+		idImageCavalier.layoutXProperty().bind(idPaneCavalier.widthProperty().multiply(0.5).subtract(idImageCavalier.fitWidthProperty().divide(2)));
+		idImageCavalier.layoutYProperty().bind(idPaneCavalier.heightProperty().multiply(0.5).subtract(idImageCavalier.fitHeightProperty().divide(2)));
+
 		this.bindLabelSize(idLieu, 16,atomicScene);
 		this.bindLabelSize(idIdentite, 14,atomicScene);
 		this.bindLabelSize(idNumeroEpreuve, 16,atomicScene);

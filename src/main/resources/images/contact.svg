@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <!-- Tête -->
+    <circle cx="50" cy="38" r="16" fill="#00AEEF"/>
+
+    <!-- Épaules -->
+    <path
+            d="M20 85
+       C20 65, 80 65, 80 85
+       Z"
+            fill="#00AEEF"
+    />
+</svg>

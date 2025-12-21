@@ -26,9 +26,11 @@
          <children>
               <GridPane fx:id="idGridpaneEpreuve" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="SOMETIMES">
                   <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="2.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" percentWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" percentWidth="2.0" />
                       <ColumnConstraints hgrow="SOMETIMES" percentWidth="4.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" percentWidth="76.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" percentWidth="72.0" />
                       <ColumnConstraints hgrow="SOMETIMES" percentWidth="10.0" />
                   </columnConstraints>
                   <rowConstraints>
@@ -37,7 +39,7 @@
                   <RowConstraints />
                   </rowConstraints>
                   <children>
-                  <Pane fx:id="idPaneChrono" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Pane fx:id="idPaneLogo" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <children>
                             <ImageView fx:id="idLogo" fitWidth="100.0" layoutX="20.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
@@ -46,7 +48,7 @@
                             </ImageView>
                      </children>
                   </Pane>
-                      <GridPane GridPane.columnIndex="1">
+                      <GridPane GridPane.columnIndex="3">
                           <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
@@ -63,7 +65,7 @@
                               </Label>
                           </children>
                       </GridPane>
-                      <GridPane GridPane.columnIndex="2">
+                      <GridPane GridPane.columnIndex="4">
                           <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints />
@@ -103,7 +105,7 @@
                               </GridPane>
                           </children>
                       </GridPane>
-                      <GridPane fx:id="idGridpaneChrono" style="-fx-background-color: #004C66; -fx-background-radius: 15px 0px 0px 15px;" GridPane.columnIndex="3" GridPane.halignment="RIGHT">
+                      <GridPane fx:id="idGridpaneChrono" style="-fx-background-color: #00252f; -fx-background-radius: 15px 0px 0px 15px;" GridPane.columnIndex="5" GridPane.halignment="RIGHT">
                           <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" percentWidth="40.0" />
                               <ColumnConstraints hgrow="SOMETIMES" percentWidth="60.0" />
@@ -117,7 +119,7 @@
                                       <Font name="Arial Bold" size="23.0" />
                                   </font>
                               </Label>
-                        <Pane>
+                        <Pane fx:id="idPaneChrono">
                            <children>
                                     <ImageView fx:id="idImageChrono" layoutX="8.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
                                         <image>
@@ -128,7 +130,7 @@
                         </Pane>
                           </children>
                       </GridPane>
-                      <GridPane GridPane.columnIndex="3" GridPane.rowIndex="1">
+                      <GridPane GridPane.columnIndex="5" GridPane.rowIndex="1">
                           <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" />
                               <ColumnConstraints hgrow="SOMETIMES" percentWidth="70.0" />
@@ -137,7 +139,7 @@
                               <RowConstraints percentHeight="100.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                           <children>
-                              <Label fx:id="idPenalite" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" style="-fx-background-color: #009EE2; -fx-background-radius: 10% 0% 0% 10%;" text="4 pts" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                              <Label fx:id="idPenalite" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" style="-fx-background-color: #004C66; -fx-background-radius: 10% 0% 0% 10%;" text="4 pts" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                                   <font>
                                       <Font name="Arial Bold" size="23.0" />
                                   </font>
@@ -238,11 +240,11 @@
                               </Label>
                           </children>
                       </GridPane>
-                  <Pane GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Pane fx:id="idPaneCavalier" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <children>
-                            <ImageView fx:id="idImageCavalier" fitHeight="92.0" fitWidth="57.0" layoutX="3.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                            <ImageView fx:id="idImageCavalier" fitHeight="64.0" fitWidth="64.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
-                                    <Image url="@../images/chrono.png" />
+                                    <Image url="@../images/contact.png" />
                                 </image>
                             </ImageView>
                      </children>
