@@ -232,7 +232,8 @@ public class ControllerVideo implements Initializable {
 
 	private void setLabelTextSize(final Label label, final int defaultSize, double sceneWidth) {
         final double widthRatio = sceneWidth/ControllerVideo.BASE_WIDTH;
-		label.setFont(Font.font(label.getFont().getFamily(), FontWeight.findByName(label.getFont().getStyle()), widthRatio * defaultSize));
+		double textSize = widthRatio * defaultSize;
+		label.setFont(Font.font(label.getFont().getFamily(), FontWeight.findByName(label.getFont().getStyle()), textSize));
 	}
 
 	private ChangeListener<? super Boolean> addFadeTransition(final Node node) {
