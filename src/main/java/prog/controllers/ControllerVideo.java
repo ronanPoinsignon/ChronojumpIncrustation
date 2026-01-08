@@ -44,7 +44,6 @@ public class ControllerVideo implements Initializable {
 	private static final int PORT_PRENALITE = 8092;					// port incruste penalite
 	private static final int PORT_CHRONO = 8093;					// port incruste chrono
 	private static final int PORT_DOSSARD = 8094;					// port incruste dossard
-	private static final int PORT_IDENTITY = 8095;					// port incruste identite
 
 	private static final int FADE_DURATION = 200;
 
@@ -58,8 +57,6 @@ public class ControllerVideo implements Initializable {
 	private Label idNumeroEpreuve;
 	@FXML
 	private Label idLieu;
-	@FXML
-	private Label idIdentite;
 	@FXML
 	private Label idChrono;
 	@FXML
@@ -120,7 +117,7 @@ public class ControllerVideo implements Initializable {
 		labelTacheMap.put(idPenalite, new RawTacheReception(ControllerVideo.PORT_PRENALITE));
 		labelTacheMap.put(idChrono, new RawTacheReception(ControllerVideo.PORT_CHRONO));
 		labelTacheMap.put(idDossard, new RawTacheReception(ControllerVideo.PORT_DOSSARD));
-		labelTacheMap.put(idIdentite, new RawTacheReception(ControllerVideo.PORT_IDENTITY));
+		labelTacheMap.forEach(this::bind);
 
 		JsonTacheReception<JsonEpreuve> tacheLieu = new JsonTacheReception<>(ControllerVideo.PORT_LIEU_EPREUVE, JsonEpreuve.class);
 		JsonEpreuve epreuve = tacheLieu.getObject();
@@ -191,7 +188,6 @@ public class ControllerVideo implements Initializable {
 		idImageCavalier.layoutYProperty().bind(idPaneCavalier.heightProperty().multiply(0.5).subtract(idImageCavalier.fitHeightProperty().divide(2)));
 
 		this.bindLabelSize(idLieu, 16,atomicScene);
-		this.bindLabelSize(idIdentite, 14,atomicScene);
 		this.bindLabelSize(idNumeroEpreuve, 16,atomicScene);
 		this.bindLabelSize(idPereCheval, 16,atomicScene);
 		this.bindLabelSize(idMereCheval, 16,atomicScene);
