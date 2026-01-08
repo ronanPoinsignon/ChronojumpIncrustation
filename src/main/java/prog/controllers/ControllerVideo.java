@@ -48,10 +48,7 @@ public class ControllerVideo implements Initializable {
 	private static final int FADE_DURATION = 200;
 
 	// 20% de la hauteur de l'écran
-	private static final double PANEL_INFO_COUREUR_HEIGHT_PERCENTAGE = 0.134;
-	private static final double PANEL_INFO_EPREUVE_HEIGHT_PERCENTAGE = 0.134;
 	private static final int BASE_WIDTH = 1280;
-	private static final int BASE_HEIGHT = 720;
 
 	@FXML
 	private Label idNumeroEpreuve;
@@ -92,15 +89,7 @@ public class ControllerVideo implements Initializable {
 	@FXML
 	private GridPane idGridpaneChrono;
 	@FXML
-	private GridPane idGridpaneCheval;
-	@FXML
-	private GridPane idGridpaneParents;
-	@FXML
-	private GridPane idGridpaneCavalier;
-	@FXML
 	private GridPane idGridpaneInfo;
-	@FXML
-	private GridPane idGridpaneEpreuve;
 	@FXML
 	private AnchorPane idAnchorBase;
 
