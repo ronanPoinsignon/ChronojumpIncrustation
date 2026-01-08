@@ -128,10 +128,6 @@ public class ControllerVideo implements Initializable {
 		JsonTacheReception<JsonCheval> tacheCheval = new JsonTacheReception<>(PORT_CHEVAL_JSON, JsonCheval.class);
 		JsonCheval json  = tacheCheval.getObject();
 
-		final Thread chavalThread = new Thread(tacheCheval);
-		chavalThread.setDaemon(true);
-		chavalThread.start();
-
 		this.bind(idNomCheval, json.getChevalName());
 		this.bind(idRaceCheval, json.getRace());
 		this.bind(idPereCheval, json.getPere(), value -> "Père : " + value);
@@ -206,6 +202,11 @@ public class ControllerVideo implements Initializable {
 			t.setDaemon(true);
 			t.start();
 		});
+
+		final Thread chavalThread = new Thread(tacheCheval);
+		chavalThread.setDaemon(true);
+		chavalThread.start();
+
 		final Thread t = new Thread(tacheLieu);
 		t.setDaemon(true);
 		t.start();
