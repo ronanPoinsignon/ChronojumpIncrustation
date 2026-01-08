@@ -149,16 +149,14 @@ public class ControllerVideo implements Initializable {
 		idGridpaneChrono.visibleProperty().bind(idChrono.visibleProperty());
 		idChrono.visibleProperty().addListener(addFadeTransition(idGridpaneChrono));
 
-		BooleanBinding allLabelsVisible = Bindings.createBooleanBinding(() -> false);
-		for (final Label label : labelTacheMap.keySet()) {
-			allLabelsVisible = Bindings.or(allLabelsVisible, label.visibleProperty());
-		}
-		allLabelsVisible = Bindings.or(allLabelsVisible, idNomCheval.visibleProperty())
+		BooleanBinding allLabelsVisible = Bindings.or(Bindings.createBooleanBinding(() -> false), idNomCheval.visibleProperty())
 				.or(idRaceCheval.visibleProperty())
 				.or(idPereCheval.visibleProperty())
 				.or(idMereCheval.visibleProperty())
 				.or(idPereMereCheval.visibleProperty())
-				.or(idNomCavalier.visibleProperty());
+				.or(idNomCavalier.visibleProperty())
+				.or(idDossard.visibleProperty());
+
 		idGridpaneInfo.visibleProperty().bind(allLabelsVisible);
 		allLabelsVisible.addListener(addFadeTransition(idGridpaneInfo));
 
