@@ -1,8 +1,6 @@
 package prog.controllers;
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
@@ -10,6 +8,7 @@ import java.util.function.Function;
 import javafx.animation.FadeTransition;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
@@ -28,10 +27,8 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import prog.observableproperties.StringObsProperty;
-import prog.observableproperties.json.JsonCheval;
-import prog.observableproperties.json.JsonEpreuve;
+import prog.transmission.EventObserver;
 import prog.transmission.tache.AbstractTacheReception;
-import prog.transmission.tache.JsonTacheReception;
 import prog.transmission.tache.RawTacheReception;
 
 public class ControllerVideo implements Initializable {
@@ -39,16 +36,12 @@ public class ControllerVideo implements Initializable {
 //	private static final String INIT_IP_ADRESSE = "192.168.1.31";
 	private static final String INIT_IP_ADRESSE = "169.254.122.66";
 
-	private static final int PORT_LIEU_EPREUVE = 8090;				// port incruste lieu + numéro épreuve
-	private static final int PORT_CHEVAL_JSON = 8091;				// port incruste cheval
-	private static final int PORT_PRENALITE = 8092;					// port incruste penalite
-	private static final int PORT_CHRONO = 8093;					// port incruste chrono
-	private static final int PORT_DOSSARD = 8094;					// port incruste dossard
-
 	private static final int FADE_DURATION = 200;
 
 	// 20% de la hauteur de l'écran
 	private static final int BASE_WIDTH = 1280;
+
+	private final EventObserver eventObserver = EventObserver.getInstance();
 
 	@FXML
 	private Label idNumeroEpreuve;
@@ -102,32 +95,24 @@ public class ControllerVideo implements Initializable {
 
 		// Gestion des events de récéption des informations
 
-		final Map<Label, RawTacheReception> labelTacheMap = new HashMap<>();
-		labelTacheMap.put(idPenalite, new RawTacheReception(ControllerVideo.PORT_PRENALITE));
-		labelTacheMap.put(idChrono, new RawTacheReception(ControllerVideo.PORT_CHRONO));
-		labelTacheMap.put(idDossard, new RawTacheReception(ControllerVideo.PORT_DOSSARD));
-		labelTacheMap.forEach(this::bind);
+		this.bind(idChrono, eventObserver.getChrono());
+		this.bind(idDossard, eventObserver.getDossard());
+		this.bind(idPenalite, eventObserver.getPenalite());
 
-		JsonTacheReception<JsonEpreuve> tacheLieu = new JsonTacheReception<>(ControllerVideo.PORT_LIEU_EPREUVE, JsonEpreuve.class);
-		JsonEpreuve epreuve = tacheLieu.getObject();
-		bind(idLieu, epreuve.getLieu());
-		bind(idNumeroEpreuve, epreuve.getNumero());
+		bind(idLieu, eventObserver.getLieuEpreuve());
+		bind(idNumeroEpreuve, eventObserver.getNumeroEpreuve());
 
-
-		JsonTacheReception<JsonCheval> tacheCheval = new JsonTacheReception<>(PORT_CHEVAL_JSON, JsonCheval.class);
-		JsonCheval json  = tacheCheval.getObject();
-
-		this.bind(idNomCheval, json.getChevalName());
-		this.bind(idRaceCheval, json.getRace());
-		this.bind(idPereCheval, json.getPere(), value -> "Père : " + value);
-		this.bind(idMereCheval, json.getMere(), value -> "Mère : " + value);
-		this.bind(idPereMereCheval, json.getPereMere(), value -> "Père de mère : " + value);
-		this.bind(idNomCavalier, json.getCavalier(), (value) -> {
+		this.bind(idNomCheval, eventObserver.getChevalName());
+		this.bind(idRaceCheval, eventObserver.getChevalRace());
+		this.bind(idPereCheval, eventObserver.getChevalPere(), value -> "Père : " + value);
+		this.bind(idMereCheval, eventObserver.getChevalMere(), value -> "Mère : " + value);
+		this.bind(idPereMereCheval, eventObserver.getChevalPereMere(), value -> "Père de mère : " + value);
+		this.bind(idNomCavalier, eventObserver.getCavalier(), (value) -> {
 			String[] parts = value.split(" ", -1);
 			String nom = parts.length == 2 ? parts[1].split("_")[0] : "";
 			return nom.toUpperCase();
 		});
-		this.bind(idPrenomCavalier, json.getCavalier(), (value) -> {
+		this.bind(idPrenomCavalier, eventObserver.getCavalier(), (value) -> {
 			String[] parts = value.split("_");
 			String prenom = parts.length > 1 ? parts[parts.length - 1] : value;
 			return capitalizeFirstOnly(prenom);
@@ -182,21 +167,6 @@ public class ControllerVideo implements Initializable {
 		this.bindLabelSize(idRaceCheval, 23,atomicScene);
 		this.bindLabelSize(idDossard, 23,atomicScene);
 		this.bindLabelSize(idChrono, 23,atomicScene);
-
-		// Lancement des process de récéption
-		labelTacheMap.values().forEach(tache -> {
-			final Thread t = new Thread(tache);
-			t.setDaemon(true);
-			t.start();
-		});
-
-		final Thread chavalThread = new Thread(tacheCheval);
-		chavalThread.setDaemon(true);
-		chavalThread.start();
-
-		final Thread t = new Thread(tacheLieu);
-		t.setDaemon(true);
-		t.start();
 	}
 
 	private void bindLabelSize(Label label, int defaultSize, AtomicReference<Scene> atomicScene) {
@@ -249,7 +219,11 @@ public class ControllerVideo implements Initializable {
 	}
 
 	private void bind(final Label label, final RawTacheReception tacheReception) {
-		label.textProperty().bind(tacheReception.valueProperty());
+		this.bind(label, tacheReception.valueProperty());
+	}
+
+	private void bind(final Label label, final ReadOnlyObjectProperty<String> property) {
+		label.textProperty().bind(property);
 		setVisibilityEvent(label);
 	}
 
