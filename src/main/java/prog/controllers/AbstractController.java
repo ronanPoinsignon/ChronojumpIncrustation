@@ -50,7 +50,13 @@ public abstract class AbstractController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        idAnchorBase.sceneProperty().addListener((obsScene, oldVScene, newScene) -> onSceneUpdate(newScene));
+        idAnchorBase.sceneProperty().addListener((obsScene, oldVScene, newScene) -> {
+            if(newScene == null) {
+                return;
+            }
+
+            onSceneUpdate(newScene);
+        });
     }
 
     protected void bindLabelSize(Label label, int defaultSize, Scene scene) {
