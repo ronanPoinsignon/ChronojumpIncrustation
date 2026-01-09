@@ -23,7 +23,7 @@ public class App extends Application {
 	@Override
 	public void start(final Stage pStage) throws Exception {
 		final Stage stage = new Stage();
-		final FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/SHF_incrustation.fxml"));
+		final FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/menu_choix_incrustation.fxml"));
 		final Parent sceneVideo = loader.load();
 		final Scene scene = new Scene(sceneVideo);
 		stage.setMinWidth(640);
