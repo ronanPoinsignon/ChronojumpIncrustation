@@ -39,7 +39,7 @@ public abstract class AbstractController implements Initializable {
 
     private boolean isFullScreen = false;
     private double coordX, coordY;
-    private AtomicReference<Scene> atomicScene = new AtomicReference<>();
+    private final AtomicReference<Scene> atomicScene = new AtomicReference<>();
 
     @FXML
     private AnchorPane idAnchorBase;
