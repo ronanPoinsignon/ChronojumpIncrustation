@@ -13,7 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import prog.transmission.EventObserver;
 
-public class SHFControllerIncrustation extends AbstractController {
+public class SHFControllerIncrustation extends AbstractControllerIncrustation {
 
 	private final EventObserver eventObserver = EventObserver.getInstance();
 

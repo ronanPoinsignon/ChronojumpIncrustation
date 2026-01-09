@@ -8,7 +8,7 @@ import prog.transmission.EventObserver;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class BasicControllerIncrustation extends AbstractController {
+public class BasicControllerIncrustation extends AbstractControllerIncrustation {
 
     private final EventObserver eventObserver = EventObserver.getInstance();
 
