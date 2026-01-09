@@ -190,7 +190,7 @@ public abstract class AbstractController implements Initializable {
     }
 
     protected void switchFullScreen(final Stage stage) {
-        stage.setFullScreen(isFullScreen = !isFullScreen);
+        stage.setMaximized(isFullScreen = !isFullScreen);
     }
 
     protected AtomicReference<Scene> getAtomicScene() {
