@@ -30,9 +30,9 @@ import javafx.util.Duration;
 import prog.observableproperties.StringObsProperty;
 import prog.observableproperties.json.JsonCheval;
 import prog.observableproperties.json.JsonEpreuve;
-import prog.transmission.AbstractTacheReception;
-import prog.transmission.JsonTacheReception;
-import prog.transmission.RawTacheReception;
+import prog.transmission.tache.AbstractTacheReception;
+import prog.transmission.tache.JsonTacheReception;
+import prog.transmission.tache.RawTacheReception;
 
 public class ControllerVideo implements Initializable {
 

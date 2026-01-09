@@ -1,4 +1,4 @@
-package prog.transmission;
+package prog.transmission.tache;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package prog.transmission;
+package prog.transmission.tache;
 
 public class RawTacheReception extends AbstractTacheReception<String> {
 
