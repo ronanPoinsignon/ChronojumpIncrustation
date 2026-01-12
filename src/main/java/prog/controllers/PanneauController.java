@@ -33,7 +33,7 @@ public class PanneauController extends AbstractController {
     @FXML
     private SVGPath idSVGCheval;
     @FXML
-    private SVGPath idSVGPenalite;
+    private SVGPath idSVGDossard;
     @FXML
     private SVGPath idSVGChrono;
     @FXML
@@ -41,7 +41,7 @@ public class PanneauController extends AbstractController {
     @FXML
     private GridPane idGridpaneCheval;
     @FXML
-    private GridPane idGridpanePenalite;
+    private GridPane idGridpaneDossard;
     @FXML
     private GridPane idGridpaneChrono;
 
@@ -61,7 +61,7 @@ public class PanneauController extends AbstractController {
 
         bindParallelogramme(idGridpaneCavalier, idSVGCavalier);
         bindParallelogramme(idGridpaneCheval, idSVGCheval);
-        bindParallelogramme(idGridpanePenalite, idSVGPenalite);
+        bindParallelogramme(idGridpaneDossard, idSVGDossard);
         bindParallelogramme(idGridpaneChrono, idSVGChrono);
     }
 
