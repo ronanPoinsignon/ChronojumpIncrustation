@@ -16,7 +16,6 @@ public class AbstractControllerIncrustation extends AbstractController {
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
 
-
         try {
             openSecondaryPannel();
         } catch(IOException e) {
@@ -29,8 +28,8 @@ public class AbstractControllerIncrustation extends AbstractController {
         final FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/panneau_incrustation.fxml"));
         final Parent sceneVideo = loader.load();
         final Scene scene = new Scene(sceneVideo);
-        stage.setMinWidth(1280);
-        stage.setMinHeight(720);
+        stage.setWidth(1280);
+        stage.setHeight(720);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
