@@ -41,7 +41,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label fx:id="idCavalier" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-shape: M 0,0 L 100,0 L 120,100 L 20,100 Z;" text="Nom CAVALIER" textFill="WHITE" GridPane.columnIndex="1">
+                        <Label fx:id="idCavalier" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Nom CAVALIER" textFill="WHITE" GridPane.columnIndex="1">
                            <font>
                               <Font name="Arial" size="45.0" />
                            </font>
