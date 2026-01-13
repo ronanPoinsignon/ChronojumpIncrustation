@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.SVGPath;
 import prog.transmission.EventObserver;
 
@@ -44,7 +45,14 @@ public class PanneauController extends AbstractController {
     private GridPane idGridpaneDossard;
     @FXML
     private GridPane idGridpaneChrono;
-
+    @FXML
+    private StackPane idStackpaneCavalier;
+    @FXML
+    private StackPane idStackpaneCheval;
+    @FXML
+    private StackPane idStackpaneDossard;
+    @FXML
+    private GridPane idGridpaneChronoMain;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -63,6 +71,13 @@ public class PanneauController extends AbstractController {
         bindParallelogramme(idGridpaneCheval, idSVGCheval);
         bindParallelogramme(idGridpaneDossard, idSVGDossard);
         bindParallelogramme(idGridpaneChrono, idSVGChrono);
+
+        // gestion visibilité
+
+        idStackpaneCavalier.visibleProperty().bind(idCavalier.visibleProperty());
+        idStackpaneCheval.visibleProperty().bind(idCheval.visibleProperty());
+        idStackpaneDossard.visibleProperty().bind(idDossard.visibleProperty());
+        idGridpaneChronoMain.visibleProperty().bind(idChrono.visibleProperty());
     }
 
     private void bindParallelogramme(Region region, SVGPath svgPath) {
