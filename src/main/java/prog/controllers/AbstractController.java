@@ -34,7 +34,6 @@ public abstract class AbstractController implements Initializable {
     private static final String INIT_IP_ADRESSE = "192.168.1.20";
 //	private static final String INIT_IP_ADRESSE = "169.254.122.66";
 
-    // 20% de la hauteur de l'écran
     protected static final int BASE_WIDTH = 1280;
 
     private boolean isFullScreen = false;
