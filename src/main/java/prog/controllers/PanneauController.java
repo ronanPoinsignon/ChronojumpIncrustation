@@ -30,6 +30,8 @@ public class PanneauController extends AbstractController {
     @FXML
     private Label idMereCheval;
     @FXML
+    private Label idPenalite;
+    @FXML
     private SVGPath idSVGCavalier;
     @FXML
     private SVGPath idSVGCheval;
@@ -37,6 +39,8 @@ public class PanneauController extends AbstractController {
     private SVGPath idSVGDossard;
     @FXML
     private SVGPath idSVGChrono;
+    @FXML
+    private SVGPath idSVGPenalite;
     @FXML
     private GridPane idGridpaneCavalier;
     @FXML
@@ -53,6 +57,8 @@ public class PanneauController extends AbstractController {
     private StackPane idStackpaneDossard;
     @FXML
     private GridPane idGridpaneChronoMain;
+    @FXML
+    private GridPane idGridpanePenalite;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -63,6 +69,7 @@ public class PanneauController extends AbstractController {
         this.bind(idPereCheval, eventObserver.getChevalPere());
         this.bind(idDossard, eventObserver.getDossard());
         this.bind(idMereCheval, eventObserver.getChevalMere());
+        this.bind(idPenalite, eventObserver.getPenalite());
         this.bind(idChrono, eventObserver.getChrono());
 
         // gestion parallelogramme
@@ -71,6 +78,7 @@ public class PanneauController extends AbstractController {
         bindParallelogramme(idGridpaneCheval, idSVGCheval);
         bindParallelogramme(idGridpaneDossard, idSVGDossard);
         bindParallelogramme(idGridpaneChrono, idSVGChrono);
+        bindParallelogramme(idGridpanePenalite, idSVGPenalite);
 
         // gestion visibilité
 
@@ -78,6 +86,7 @@ public class PanneauController extends AbstractController {
         idStackpaneCheval.visibleProperty().bind(idCheval.visibleProperty());
         idStackpaneDossard.visibleProperty().bind(idDossard.visibleProperty());
         idGridpaneChronoMain.visibleProperty().bind(idChrono.visibleProperty());
+        idGridpanePenalite.visibleProperty().bind(idPenalite.visibleProperty());
     }
 
     private void bindParallelogramme(Region region, SVGPath svgPath) {
@@ -110,5 +119,6 @@ public class PanneauController extends AbstractController {
         this.bindLabelSize(idDossard, 35, scene);
         this.bindLabelSize(idMereCheval, 35, scene);
         this.bindLabelSize(idChrono, 50, scene);
+        this.bindLabelSize(idPenalite, 40, scene);
     }
 }

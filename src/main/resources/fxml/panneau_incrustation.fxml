@@ -114,6 +114,9 @@
                                  </font>
                               </Label>
                            </children>
+                           <rowConstraints>
+                              <RowConstraints />
+                           </rowConstraints>
                         </GridPane>
                      </children>
                   </StackPane>
@@ -128,18 +131,57 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <GridPane>
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints percentHeight="10.0" vgrow="SOMETIMES" />
-                      <RowConstraints percentHeight="90.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <Pane style="-fx-background-color: white;" />
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints percentHeight="10.0" vgrow="SOMETIMES" />
+                            <RowConstraints percentHeight="90.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Pane style="-fx-background-color: white;" />
+                           </children>
+                        </GridPane>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" percentWidth="70.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" percentWidth="30.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <Pane>
+                                       <children>
+                                          <SVGPath fx:id="idSVGPenalite" content="M 10.602624443095735,0 L 108.0,0 L 97.39737555690427,62.0 L 0,62.0 Z" fill="WHITE" />
+                                       </children>
+                                    </Pane>
+                                    <GridPane fx:id="idGridpanePenalite">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" percentWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label fx:id="idPenalite" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="10" textFill="#ab0000">
+                                             <font>
+                                                <Font name="Arial" size="40.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </GridPane>
                      </children>
-                  </GridPane>
+                  </StackPane>
                   <StackPane GridPane.columnIndex="1">
                      <children>
                         <GridPane>
