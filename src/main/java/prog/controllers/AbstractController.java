@@ -31,8 +31,8 @@ public abstract class AbstractController implements Initializable {
 
     private static final int FADE_DURATION = 200;
 
-    private static final String INIT_IP_ADRESSE = "192.168.1.20";
-//	private static final String INIT_IP_ADRESSE = "169.254.122.66";
+//    private static final String INIT_IP_ADRESSE = "192.168.1.20";
+	private static final String INIT_IP_ADRESSE = "169.254.122.66";
 
     protected static final int BASE_WIDTH = 1280;
 
