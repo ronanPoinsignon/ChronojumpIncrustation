@@ -1,5 +1,6 @@
 package prog.controllers;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -56,21 +57,28 @@ public class PanneauController extends AbstractController {
     @FXML
     private StackPane idStackpaneDossard;
     @FXML
+    private StackPane idStackpaneChrono;
+    @FXML
+    private StackPane idStackpanePenalite;
+    @FXML
     private GridPane idGridpaneChronoMain;
     @FXML
     private GridPane idGridpanePenalite;
+    @FXML
+    private GridPane idGridpanePenaliteHidden;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
 
-        this.bind(idCavalier, eventObserver.getCavalier(), value -> value.replace("(Mme\\.)|(M\\.)", "").trim());
-        this.bind(idCheval, eventObserver.getChevalName());
-        this.bind(idPereCheval, eventObserver.getChevalPere());
-        this.bind(idDossard, eventObserver.getDossard());
-        this.bind(idMereCheval, eventObserver.getChevalMere());
-        this.bind(idPenalite, eventObserver.getPenalite());
-        this.bind(idChrono, eventObserver.getChrono());
+//        this.bind(idCavalier, eventObserver.getCavalier(), value -> value.replace("(Mme\\.)|(M\\.)", "").trim());
+//        this.bind(idCheval, eventObserver.getChevalName());
+//        this.bind(idPereCheval, eventObserver.getChevalPere());
+//        this.bind(idDossard, eventObserver.getDossard());
+//        this.bind(idMereCheval, eventObserver.getChevalMere());
+//        this.bind(idPenalite, eventObserver.getPenalite());
+//        this.bind(idChrono, eventObserver.getChrono());
 
         // gestion parallelogramme
 
@@ -85,8 +93,10 @@ public class PanneauController extends AbstractController {
         idStackpaneCavalier.visibleProperty().bind(idCavalier.visibleProperty());
         idStackpaneCheval.visibleProperty().bind(idCheval.visibleProperty());
         idStackpaneDossard.visibleProperty().bind(idDossard.visibleProperty());
-        idGridpaneChronoMain.visibleProperty().bind(idChrono.visibleProperty());
-        idGridpanePenalite.visibleProperty().bind(idPenalite.visibleProperty());
+        idStackpaneChrono.visibleProperty().bind(idChrono.visibleProperty());
+        idStackpanePenalite.visibleProperty().bind(idPenalite.visibleProperty());
+        idGridpaneChronoMain.visibleProperty().bind(Bindings.or(idStackpanePenalite.visibleProperty(), idStackpaneChrono.visibleProperty()));
+        idGridpanePenaliteHidden.visibleProperty().bind(idStackpaneChrono.visibleProperty());
     }
 
     private void bindParallelogramme(Region region, SVGPath svgPath) {
