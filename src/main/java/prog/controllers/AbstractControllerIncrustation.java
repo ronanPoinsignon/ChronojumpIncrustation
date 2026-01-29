@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import prog.utils.ResourceUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,7 +26,7 @@ public class AbstractControllerIncrustation extends AbstractController {
 
     private void openSecondaryPannel() throws IOException {
         final Stage stage = new Stage();
-        final FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/panneau_incrustation.fxml"));
+        final FXMLLoader loader = new FXMLLoader(ResourceUtils.getResource("/fxml/panneau_incrustation.fxml"));
         final Parent sceneVideo = loader.load();
         final Scene scene = new Scene(sceneVideo);
         stage.setWidth(1280);

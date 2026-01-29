@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import prog.transmission.EventObserver;
+import prog.utils.Utils;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,7 +34,7 @@ public class BasicControllerIncrustation extends AbstractControllerIncrustation 
         this.bind(idDossard, eventObserver.getDossard());
         this.bind(idPenalite, eventObserver.getPenalite());
         this.bind(idNomCheval, eventObserver.getChevalName());
-        this.bind(idNomCavalier, eventObserver.getCavalier(), value -> value.replace("(Mme\\.)|(M\\.)", "").trim());
+        this.bind(idNomCavalier, eventObserver.getCavalier(), value -> Utils.getNom(value).toUpperCase() + " " + Utils.capitalizeFirstOnly(Utils.getPrenom(value)));
     }
 
     @Override

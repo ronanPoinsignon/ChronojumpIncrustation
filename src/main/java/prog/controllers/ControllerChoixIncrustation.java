@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import prog.utils.ResourceUtils;
 
 import java.io.IOException;
 
@@ -35,7 +36,7 @@ public class ControllerChoixIncrustation extends AbstractController {
         actualStage.close();
 
         final Stage stage = new Stage();
-        final FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/" + fxmlName));
+        final FXMLLoader loader = new FXMLLoader(ResourceUtils.getResource("/fxml/" + fxmlName));
         final Parent sceneVideo = loader.load();
         final Scene scene = new Scene(sceneVideo);
         stage.setMinWidth(640);

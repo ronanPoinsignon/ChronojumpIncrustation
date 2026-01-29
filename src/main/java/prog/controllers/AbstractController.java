@@ -21,6 +21,7 @@ import javafx.util.Duration;
 import prog.observableproperties.StringObsProperty;
 import prog.transmission.tache.AbstractTacheReception;
 import prog.transmission.tache.RawTacheReception;
+import prog.utils.ResourceUtils;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -98,17 +99,6 @@ public abstract class AbstractController implements Initializable {
             }
             transition.play();
         };
-    }
-
-    protected String capitalizeFirstOnly(String value) {
-        if(value == null) {
-            return null;
-        }
-        if(value.trim().isEmpty()) {
-            return "";
-        }
-
-        return value.substring(0, 1).toUpperCase() + value.substring(1).toLowerCase();
     }
 
     protected void bind(final Label label, final RawTacheReception tacheReception) {

@@ -10,6 +10,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.SVGPath;
 import prog.transmission.EventObserver;
+import prog.utils.Utils;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -72,7 +73,7 @@ public class PanneauController extends AbstractController {
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
 
-//        this.bind(idCavalier, eventObserver.getCavalier(), value -> value.replace("(Mme\\.)|(M\\.)", "").trim());
+//        this.bind(idCavalier, eventObserver.getCavalier(), value -> Utils.getNom(value).toUpperCase() + " " + Utils.capitalizeFirstOnly(Utils.getPrenom(value)));
 //        this.bind(idCheval, eventObserver.getChevalName());
 //        this.bind(idPereCheval, eventObserver.getChevalPere());
 //        this.bind(idDossard, eventObserver.getDossard());

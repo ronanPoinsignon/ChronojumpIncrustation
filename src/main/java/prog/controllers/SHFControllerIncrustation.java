@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import prog.transmission.EventObserver;
+import prog.utils.Utils;
 
 public class SHFControllerIncrustation extends AbstractControllerIncrustation {
 
@@ -76,16 +77,8 @@ public class SHFControllerIncrustation extends AbstractControllerIncrustation {
 		this.bind(idPereCheval, eventObserver.getChevalPere(), value -> "Père : " + value);
 		this.bind(idMereCheval, eventObserver.getChevalMere(), value -> "Mère : " + value);
 		this.bind(idPereMereCheval, eventObserver.getChevalPereMere(), value -> "Père de mère : " + value.replace("(Mme\\.)|(M\\.)", "").trim());
-		this.bind(idNomCavalier, eventObserver.getCavalier(), (value) -> {
-			String[] parts = value.split(" ", -1);
-			String nom = parts.length == 2 ? parts[1].split("_")[0] : "";
-			return nom.toUpperCase();
-		});
-		this.bind(idPrenomCavalier, eventObserver.getCavalier(), (value) -> {
-			String[] parts = value.split("_");
-			String prenom = parts.length > 1 ? parts[parts.length - 1] : value;
-			return capitalizeFirstOnly(prenom);
-		});
+		this.bind(idNomCavalier, eventObserver.getCavalier(), value -> Utils.getNom(value).toUpperCase());
+		this.bind(idPrenomCavalier, eventObserver.getCavalier(), value -> Utils.capitalizeFirstOnly(Utils.getPrenom(value)));
 
 		// gestion visibilité pane principaux
 
