@@ -216,7 +216,6 @@ public abstract class AbstractController implements Initializable {
         Scene scene = new Scene(next);
         Stage appStage = (Stage) this.getAtomicScene().get().getWindow();
         appStage.setScene(scene);
-        appStage.show();
     }
 
 }
