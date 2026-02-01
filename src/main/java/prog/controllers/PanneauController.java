@@ -11,6 +11,7 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 import prog.transmission.EventObserver;
+import prog.utils.Utils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -87,13 +88,13 @@ public class PanneauController extends AbstractController {
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
 
-//        this.bind(idCavalier, eventObserver.getCavalier(), value -> Utils.getNom(value).toUpperCase() + " " + Utils.capitalizeFirstOnly(Utils.getPrenom(value)));
-//        this.bind(idCheval, eventObserver.getChevalName());
-//        this.bind(idPereCheval, eventObserver.getChevalPere());
-//        this.bind(idDossard, eventObserver.getDossard());
-//        this.bind(idMereCheval, eventObserver.getChevalMere());
-//        this.bind(idPenalite, eventObserver.getPenalite());
-//        this.bind(idChrono, eventObserver.getChrono());
+        this.bind(idCavalier, eventObserver.getCavalier(), value -> Utils.getNom(value).toUpperCase() + " " + Utils.capitalizeFirstOnly(Utils.getPrenom(value)));
+        this.bind(idCheval, eventObserver.getChevalName());
+        this.bind(idPereCheval, eventObserver.getChevalPere());
+        this.bind(idDossard, eventObserver.getDossard());
+        this.bind(idMereCheval, eventObserver.getChevalMere());
+        this.bind(idPenalite, eventObserver.getPenalite());
+        this.bind(idChrono, eventObserver.getChrono());
 
         // gestion responive
 
