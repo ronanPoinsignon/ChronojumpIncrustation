@@ -157,4 +157,15 @@ public class PanneauController extends AbstractController {
         this.bindLabelSize(idClassementCavalier, 35, scene);
     }
 
+    @Override
+    protected void anchorBaseOnMousePressed(MouseEvent evt, Stage stage) {
+        super.anchorBaseOnMousePressed(evt, stage);
+        if(MouseButton.SECONDARY == evt.getButton()) {
+            try {
+                this.switchScene("/fxml/classement_incrustation.fxml");
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
