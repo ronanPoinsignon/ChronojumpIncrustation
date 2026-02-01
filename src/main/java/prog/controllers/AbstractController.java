@@ -47,7 +47,7 @@ public abstract class AbstractController implements Initializable {
 
     private boolean isFullScreen = false;
     private double coordX, coordY;
-    private final AtomicReference<Scene> atomicScene = new AtomicReference<>();
+    private final AtomicReference<Scene> ATOMIC_SCENE = new AtomicReference<>();
 
     @FXML
     private AnchorPane idAnchorBase;
@@ -193,11 +193,11 @@ public abstract class AbstractController implements Initializable {
     }
 
     protected AtomicReference<Scene> getAtomicScene() {
-        return atomicScene;
+        return ATOMIC_SCENE;
     }
 
     protected void onSceneUpdate(Scene scene) {
-        atomicScene.set(scene);
+        ATOMIC_SCENE.set(scene);
         addListener(scene.windowProperty(), (obsWindow, oldWindow, newWindow) -> {
             if(newWindow == null) {
                 return;
