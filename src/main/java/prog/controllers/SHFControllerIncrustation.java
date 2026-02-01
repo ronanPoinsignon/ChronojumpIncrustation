@@ -76,7 +76,7 @@ public class SHFControllerIncrustation extends AbstractControllerIncrustation {
 		this.bind(idRaceCheval, eventObserver.getChevalRace());
 		this.bind(idPereCheval, eventObserver.getChevalPere(), value -> "Père : " + value);
 		this.bind(idMereCheval, eventObserver.getChevalMere(), value -> "Mère : " + value);
-		this.bind(idPereMereCheval, eventObserver.getChevalPereMere(), value -> "Père de mère : " + value.replace("(Mme\\.)|(M\\.)", "").trim());
+		this.bind(idPereMereCheval, eventObserver.getChevalPereMere());
 		this.bind(idNomCavalier, eventObserver.getCavalier(), value -> Utils.getNom(value).toUpperCase());
 		this.bind(idPrenomCavalier, eventObserver.getCavalier(), value -> Utils.capitalizeFirstOnly(Utils.getPrenom(value)));
 
