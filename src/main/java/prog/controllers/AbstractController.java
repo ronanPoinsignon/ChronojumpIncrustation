@@ -6,13 +6,17 @@ import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -23,7 +27,9 @@ import prog.transmission.tache.AbstractTacheReception;
 import prog.transmission.tache.RawTacheReception;
 import prog.utils.ResourceUtils;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
@@ -161,21 +167,29 @@ public abstract class AbstractController implements Initializable {
                 switchFullScreen(stage);
             }
         });
-        idAnchorBase.setOnMousePressed(evt -> {
-            coordX = evt.getX();
-            coordY = evt.getY();
-            if(evt.getClickCount()%2 == 0) {
-                switchFullScreen(stage);
-            }
-        });
-        idAnchorBase.setOnMouseDragged(evt -> {
-            if(isFullScreen) {
-                evt.consume();
-                return;
-            }
-            stage.setX(evt.getScreenX() - coordX);
-            stage.setY(evt.getScreenY() - coordY);
-        });
+        idAnchorBase.setOnMousePressed(evt -> anchorBaseOnMousePressed(evt, stage));
+        idAnchorBase.setOnMouseDragged(evt -> anchorBaseOnMouseDragged(evt, stage));
+    }
+
+    protected void anchorBaseOnMousePressed(MouseEvent evt, Stage stage) {
+        if(!MouseButton.PRIMARY.equals(evt.getButton())) {
+            return;
+        }
+
+        coordX = evt.getX();
+        coordY = evt.getY();
+        if(evt.getClickCount()%2 == 0) {
+            switchFullScreen(stage);
+        }
+    }
+
+    protected void anchorBaseOnMouseDragged(MouseEvent evt, Stage stage) {
+        if(isFullScreen) {
+            evt.consume();
+            return;
+        }
+        stage.setX(evt.getScreenX() - coordX);
+        stage.setY(evt.getScreenY() - coordY);
     }
 
     protected void switchFullScreen(final Stage stage) {
@@ -188,6 +202,12 @@ public abstract class AbstractController implements Initializable {
 
     protected void onSceneUpdate(Scene scene) {
         atomicScene.set(scene);
-        scene.windowProperty().addListener((obsWindow, oldWindow, newWindow) -> addEvent((Stage) newWindow));
+        scene.windowProperty().addListener((obsWindow, oldWindow, newWindow) -> {
+            if(newWindow == null) {
+                return;
+            }
+
+            addEvent((Stage) newWindow);
+        });
     }
 }
