@@ -5,13 +5,14 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.shape.SVGPath;
+import javafx.stage.Stage;
 import prog.transmission.EventObserver;
-import prog.utils.Utils;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -19,6 +20,8 @@ public class PanneauController extends AbstractController {
 
     EventObserver eventObserver = EventObserver.getInstance();
 
+    @FXML
+    private AnchorPane idAnchorBase;
     @FXML
     private Label idChrono;
     @FXML
@@ -34,6 +37,14 @@ public class PanneauController extends AbstractController {
     @FXML
     private Label idPenalite;
     @FXML
+    private Label idClassementPlace;
+    @FXML
+    private Label idClassementCavalier;
+    @FXML
+    private Label idClassementPenalite;
+    @FXML
+    private Label idClassementChrono;
+    @FXML
     private SVGPath idSVGCavalier;
     @FXML
     private SVGPath idSVGCheval;
@@ -43,6 +54,8 @@ public class PanneauController extends AbstractController {
     private SVGPath idSVGChrono;
     @FXML
     private SVGPath idSVGPenalite;
+    @FXML
+    private SVGPath idSvgSeparation;
     @FXML
     private GridPane idGridpaneCavalier;
     @FXML
@@ -67,7 +80,8 @@ public class PanneauController extends AbstractController {
     private GridPane idGridpanePenalite;
     @FXML
     private GridPane idGridpanePenaliteHidden;
-
+    @FXML
+    private Pane idPaneSeparation;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -81,7 +95,11 @@ public class PanneauController extends AbstractController {
 //        this.bind(idPenalite, eventObserver.getPenalite());
 //        this.bind(idChrono, eventObserver.getChrono());
 
-        // gestion parallelogramme
+        // gestion responive
+
+        idPaneSeparation.maxHeightProperty().bind(idClassementChrono.heightProperty());
+
+        // gestion parallélogrammes
 
         bindParallelogramme(idGridpaneCavalier, idSVGCavalier);
         bindParallelogramme(idGridpaneCheval, idSVGCheval);
@@ -98,6 +116,7 @@ public class PanneauController extends AbstractController {
         idStackpanePenalite.visibleProperty().bind(idPenalite.visibleProperty());
         idGridpaneChronoMain.visibleProperty().bind(Bindings.or(idStackpanePenalite.visibleProperty(), idStackpaneChrono.visibleProperty()));
         idGridpanePenaliteHidden.visibleProperty().bind(idStackpaneChrono.visibleProperty());
+        idPaneSeparation.visibleProperty().bind(idClassementPenalite.visibleProperty());
     }
 
     private void bindParallelogramme(Region region, SVGPath svgPath) {
@@ -131,5 +150,10 @@ public class PanneauController extends AbstractController {
         this.bindLabelSize(idMereCheval, 35, scene);
         this.bindLabelSize(idChrono, 50, scene);
         this.bindLabelSize(idPenalite, 40, scene);
+        this.bindLabelSize(idClassementPenalite, 35, scene);
+        this.bindLabelSize(idClassementChrono, 35, scene);
+        this.bindLabelSize(idClassementPlace, 35, scene);
+        this.bindLabelSize(idClassementCavalier, 35, scene);
     }
+
 }
