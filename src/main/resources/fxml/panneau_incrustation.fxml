@@ -29,7 +29,7 @@
                <children>
                   <Pane>
                      <children>
-                        <SVGPath fx:id="idSVGCavalier" content="M 14,0 L 600.0,0 L 586,82.0 L 0,82.0 Z" fill="RED" />
+                        <SVGPath fx:id="idSVGCavalier" content="M 15.6,0 L 600.0,0 L 584.4,91.0 L 0,91.0 Z" fill="RED" />
                      </children>
                   </Pane>
                   <GridPane fx:id="idGridpaneCavalier">
@@ -54,7 +54,7 @@
                <children>
                   <Pane>
                      <children>
-                        <SVGPath fx:id="idSVGCheval" content="M 14,0 L 600.0,0 L 586,82.0 L 0,82.0 Z" fill="WHITE" />
+                        <SVGPath fx:id="idSVGCheval" content="M 15.6,0 L 600.0,0 L 584.4,91.0 L 0,91.0 Z" fill="WHITE" />
                      </children>
                   </Pane>
                   <GridPane fx:id="idGridpaneCheval">
