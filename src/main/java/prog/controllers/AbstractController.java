@@ -210,4 +210,13 @@ public abstract class AbstractController implements Initializable {
             addEvent((Stage) newWindow);
         });
     }
+
+    protected void switchScene(String fxml) throws IOException {
+        Parent next = FXMLLoader.load(ResourceUtils.getResource(fxml));
+        Scene scene = new Scene(next);
+        Stage appStage = (Stage) this.getAtomicScene().get().getWindow();
+        appStage.setScene(scene);
+        appStage.show();
+    }
+
 }
