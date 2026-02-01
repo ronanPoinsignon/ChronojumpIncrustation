@@ -124,8 +124,8 @@ public class PanneauController extends AbstractController {
         double angle = 10;
 
         ChangeListener<Number> listener = (obs, oldV, newV) -> svgPath.setContent(computeSVGContent(region, angle));
-        region.widthProperty().addListener(listener);
-        region.heightProperty().addListener(listener);
+        addListener(region.widthProperty(), listener);
+        addListener(region.heightProperty(), listener);
     }
 
     private String computeSVGContent(Region region, double angle) {

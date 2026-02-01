@@ -83,7 +83,7 @@ public class SHFControllerIncrustation extends AbstractControllerIncrustation {
 		// gestion visibilité pane principaux
 
 		idGridpaneChrono.visibleProperty().bind(idChrono.visibleProperty());
-		idChrono.visibleProperty().addListener(addFadeTransition(idGridpaneChrono));
+		addListener(idChrono.visibleProperty(), addFadeTransition(idGridpaneChrono));
 
 		BooleanBinding allLabelsVisible = Bindings.or(Bindings.createBooleanBinding(() -> false), idNomCheval.visibleProperty())
 				.or(idRaceCheval.visibleProperty())
@@ -94,7 +94,7 @@ public class SHFControllerIncrustation extends AbstractControllerIncrustation {
 				.or(idDossard.visibleProperty());
 
 		idGridpaneInfo.visibleProperty().bind(allLabelsVisible);
-		allLabelsVisible.addListener(addFadeTransition(idGridpaneInfo));
+		addListener(allLabelsVisible, addFadeTransition(idGridpaneInfo));
 
 		//		Gestion responsive
 		idLogo.fitWidthProperty().bind(idPaneLogo.widthProperty().multiply(0.8));

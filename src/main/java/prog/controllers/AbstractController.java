@@ -5,6 +5,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,7 +30,7 @@ import prog.utils.ResourceUtils;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
@@ -41,6 +42,8 @@ public abstract class AbstractController implements Initializable {
 	private static final String INIT_IP_ADRESSE = "169.254.122.66";
 
     protected static final int BASE_WIDTH = 1280;
+
+    private final Map<ObservableValue, List<ChangeListener<?>>> LISTENER_MAP = new HashMap<>();
 
     private boolean isFullScreen = false;
     private double coordX, coordY;
@@ -55,7 +58,7 @@ public abstract class AbstractController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        idAnchorBase.sceneProperty().addListener((obsScene, oldVScene, newScene) -> {
+        addListener(idAnchorBase.sceneProperty(), (obsScene, oldVScene, newScene) -> {
             if(newScene == null) {
                 return;
             }
@@ -65,20 +68,14 @@ public abstract class AbstractController implements Initializable {
     }
 
     protected void bindLabelSize(Label label, int defaultSize, Scene scene) {
-        ChangeListener<? super Number> listener = (obs, oldV, newV) -> {
-            if(scene == null) {
-                return;
-            }
-
+        addListener(scene.widthProperty(), (obs, oldV, newV) -> {
             double width = scene.getWidth();
             if(width == 0) {
                 return;
             }
 
             setLabelTextSize(label, defaultSize, scene.getWidth());
-        };
-
-        scene.widthProperty().addListener(listener);
+        });
     }
 
     protected void setLabelTextSize(final Label label, final int defaultSize, double sceneWidth) {
@@ -92,7 +89,7 @@ public abstract class AbstractController implements Initializable {
         imageView.fitHeightProperty().bind(scene.widthProperty().multiply(defaultSize).divide(AbstractController.BASE_WIDTH));
     }
 
-    protected ChangeListener<? super Boolean> addFadeTransition(final Node node) {
+    protected ChangeListener<Boolean> addFadeTransition(final Node node) {
         return (obs, oldV, newV) -> {
             final FadeTransition transition = new FadeTransition(Duration.millis(FADE_DURATION), node);
             if(newV) {
@@ -146,7 +143,7 @@ public abstract class AbstractController implements Initializable {
                         label.textProperty().isEmpty().or(label.textProperty().isEqualTo("0").or(label.textProperty().isEqualTo("0.0").or(label.textProperty().isEqualTo("0.00")))))
                 .then(false)
                 .otherwise(true));
-        label.visibleProperty().addListener((obs, oldV, newV) -> {
+        addListener(label.visibleProperty(), (obs, oldV, newV) -> {
             final FadeTransition transition = new FadeTransition(Duration.millis(FADE_DURATION), label);
             if(newV) {
                 transition.setFromValue(0);
@@ -201,7 +198,7 @@ public abstract class AbstractController implements Initializable {
 
     protected void onSceneUpdate(Scene scene) {
         atomicScene.set(scene);
-        scene.windowProperty().addListener((obsWindow, oldWindow, newWindow) -> {
+        addListener(scene.windowProperty(), (obsWindow, oldWindow, newWindow) -> {
             if(newWindow == null) {
                 return;
             }
@@ -211,10 +208,31 @@ public abstract class AbstractController implements Initializable {
     }
 
     protected void switchScene(String fxml) throws IOException {
+        removeAllListener();
         Parent next = FXMLLoader.load(ResourceUtils.getResource(fxml));
         Scene scene = new Scene(next);
         Stage appStage = (Stage) this.getAtomicScene().get().getWindow();
         appStage.setScene(scene);
+    }
+
+    protected <T> void addListener(ObservableValue<T> property, ChangeListener<T> listener) {
+        property.addListener(listener);
+        if(LISTENER_MAP.containsKey(property)) {
+            LISTENER_MAP.get(property).add(listener);
+        } else {
+            List<ChangeListener<?>> liste = new ArrayList<>();
+            liste.add(listener);
+            LISTENER_MAP.put(property, liste);
+        }
+    }
+
+    private void removeAllListener() {
+        for(Map.Entry<ObservableValue, List<ChangeListener<?>>> entry : LISTENER_MAP.entrySet()) {
+            ObservableValue property = entry.getKey();
+            for(ChangeListener<?> listener : entry.getValue()) {
+                property.removeListener(listener);
+            }
+        }
     }
 
 }
