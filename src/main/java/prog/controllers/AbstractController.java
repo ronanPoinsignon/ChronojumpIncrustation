@@ -2,6 +2,9 @@ package prog.controllers;
 
 import javafx.animation.FadeTransition;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -38,8 +41,8 @@ public abstract class AbstractController implements Initializable {
 
     private static final int FADE_DURATION = 200;
 
-//    private static final String INIT_IP_ADRESSE = "192.168.1.20";
-	private static final String INIT_IP_ADRESSE = "169.254.122.66";
+    private static final String INIT_IP_ADRESSE = "192.168.1.31";
+//	private static final String INIT_IP_ADRESSE = "169.254.122.66";
 
     protected static final int BASE_WIDTH = 1280;
 
@@ -78,10 +81,22 @@ public abstract class AbstractController implements Initializable {
         });
     }
 
+    protected DoubleBinding getWidthRatio(ReadOnlyDoubleProperty defaultProperty) {
+        return defaultProperty.divide((double) BASE_WIDTH);
+    }
+
     protected void setLabelTextSize(final Label label, final int defaultSize, double sceneWidth) {
-        final double widthRatio = sceneWidth/ BASE_WIDTH;
-        double textSize = widthRatio * defaultSize;
+        double textSize = getMultiplicateur(sceneWidth, defaultSize);
         label.setFont(Font.font(label.getFont().getFamily(), FontWeight.findByName(label.getFont().getStyle()), textSize));
+    }
+
+    protected double getWidthRatio(double sceneWidth) {
+        return sceneWidth / BASE_WIDTH;
+    }
+
+    protected double getMultiplicateur(double sceneWidth, double defaultSize) {
+        final double widthRatio = getWidthRatio(sceneWidth);
+        return widthRatio * defaultSize;
     }
 
     protected void setImageSize(ImageView imageView, Scene scene, int defaultSize) {

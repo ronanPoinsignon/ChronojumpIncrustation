@@ -1,0 +1,13 @@
+.table-view *.scroll-bar:horizontal *,
+.table-view *.scroll-bar:vertical * {
+  -fx-background-color: null;
+  -fx-background-radius: 0;
+  -fx-background-insets: 0;
+  -fx-padding: 0;
+}
+
+.noheader .column-header-background {
+    -fx-max-height: 0;
+    -fx-pref-height: 0;
+    -fx-min-height: 0;
+}
