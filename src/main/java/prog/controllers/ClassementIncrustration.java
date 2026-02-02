@@ -11,6 +11,7 @@ import javafx.scene.text.FontWeight;
 import prog.observableproperties.json.ClassementCavalier;
 import prog.transmission.EventObserver;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
