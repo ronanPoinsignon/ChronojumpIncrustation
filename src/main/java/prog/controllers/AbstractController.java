@@ -179,7 +179,13 @@ public abstract class AbstractController implements Initializable {
             }
         });
         idAnchorBase.setOnMousePressed(evt -> anchorBaseOnMousePressed(evt, stage));
-        idAnchorBase.setOnMouseDragged(evt -> anchorBaseOnMouseDragged(evt, stage));
+        idAnchorBase.setOnMouseDragged(evt -> {
+            if(isFullScreen) {
+                return;
+            }
+
+            anchorBaseOnMouseDragged(evt, stage);
+        });
     }
 
     protected void anchorBaseOnMousePressed(MouseEvent evt, Stage stage) {
