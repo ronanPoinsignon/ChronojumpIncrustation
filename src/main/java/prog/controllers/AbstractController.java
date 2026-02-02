@@ -229,9 +229,12 @@ public abstract class AbstractController implements Initializable {
 
     protected void switchScene(String fxml) throws IOException {
         removeAllListener();
-        Parent next = FXMLLoader.load(ResourceUtils.getResource(fxml));
+        FXMLLoader loader = new FXMLLoader(ResourceUtils.getResource(fxml));
+        Parent next = loader.load();
         Scene scene = new Scene(next);
         Stage appStage = (Stage) this.getAtomicScene().get().getWindow();
+        AbstractController controller = loader.getController();
+        controller.isFullScreen = this.isFullScreen;
         appStage.setScene(scene);
     }
 
