@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Font;
@@ -13,13 +14,16 @@ import prog.transmission.EventObserver;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 public class ClassementIncrustration extends AbstractController {
 
     private static final double PERCENTAGE_COLUMN_CLASSEMENT = 0.05;
     private static final double PERCENTAGE_COLUMN_CAVALIER = 0.95;
-    public static final int NB_SHOWN_CAVALIERS = 8;
+    private static final int NB_SHOWN_CAVALIERS = 8;
 
     private final EventObserver eventObserver = EventObserver.getInstance();
 
@@ -43,23 +47,9 @@ public class ClassementIncrustration extends AbstractController {
         super.initialize(location, resources);
 
         idTableClassement.itemsProperty().bind(eventObserver.getClassementCavalierList());
-        idColumnClassement.setCellValueFactory(param -> {
-            ObjectProperty<Integer> property = new SimpleObjectProperty<>();
-            Integer classement = param.getValue().getClassement();
-            property.set(classement);
-            return property;
-        });
-        idColumnCavalier.setCellValueFactory(param -> {
-            StringProperty property = new SimpleStringProperty();
-            property.set(param.getValue().getCavalier());
-            return property;
-        });
-        idColumnClassement.minWidthProperty().bind(idTableClassement.widthProperty().multiply(PERCENTAGE_COLUMN_CLASSEMENT));
-        idColumnClassement.prefWidthProperty().bind(idTableClassement.widthProperty().multiply(PERCENTAGE_COLUMN_CLASSEMENT));
-        idColumnClassement.maxWidthProperty().bind(idTableClassement.widthProperty().multiply(PERCENTAGE_COLUMN_CLASSEMENT));
-        idColumnCavalier.minWidthProperty().bind(idTableClassement.widthProperty().multiply(PERCENTAGE_COLUMN_CAVALIER));
-        idColumnCavalier.prefWidthProperty().bind(idTableClassement.widthProperty().multiply(PERCENTAGE_COLUMN_CAVALIER));
-        idColumnCavalier.maxWidthProperty().bind(idTableClassement.widthProperty().multiply(PERCENTAGE_COLUMN_CAVALIER));
+        idColumnClassement.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getClassement()));
+        idColumnCavalier.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getCavalier()));
+        bindTableColumnWidth(idTableClassement, Arrays.asList(idColumnClassement, idColumnCavalier), Arrays.asList(PERCENTAGE_COLUMN_CLASSEMENT, PERCENTAGE_COLUMN_CAVALIER));
 
         // gestion style table view
         style.bind(Bindings.createStringBinding(() -> String.format(
@@ -80,40 +70,8 @@ public class ClassementIncrustration extends AbstractController {
             row.styleProperty().bind(style);
             return row ;
         });
-        idColumnClassement.setCellFactory(tc -> {
-            TableCell<ClassementCavalier, Integer> cell = new TableCell<ClassementCavalier, Integer>() {
-                @Override
-                public void updateItem(Integer item, boolean empty) {
-                    super.updateItem(item, empty);
-                    setText(getString());
-                    setGraphic(null);
-                }
-
-                private String getString() {
-                    return getItem() == null ? "" : getItem().toString() + ".";
-                }
-            };
-
-            cell.setStyle("-fx-alignment: CENTER;");
-            return cell;
-        });
-        idColumnCavalier.setCellFactory(tc -> {
-            TableCell<ClassementCavalier, String> cell = new TableCell<ClassementCavalier, String>() {
-                @Override
-                public void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    setText(getString());
-                    setGraphic(null);
-                }
-
-                private String getString() {
-                    return getItem() == null ? "" : getItem();
-                }
-            };
-
-            cell.setStyle("-fx-alignment: CENTER-LEFT;");
-            return cell;
-        });
+        idColumnClassement.setCellFactory(tc -> createTableCell(value -> value + ".", Pos.CENTER));
+        idColumnCavalier.setCellFactory(tc -> createTableCell(String::toString, Pos.CENTER_LEFT));
 
         new Thread(() -> {
             try {
@@ -131,9 +89,43 @@ public class ClassementIncrustration extends AbstractController {
         }).start();
     }
 
+    private void bindTableColumnWidth(TableView<?> table, List<TableColumn<?, ?>> columnList, List<Double> percentageList) {
+        if(columnList.size() != percentageList.size()) {
+            throw new ArrayIndexOutOfBoundsException("Arrays are not the same size.");
+        }
+
+        int size = columnList.size();
+        for(int i = 0; i < size; i++) {
+            TableColumn<?, ?> column = columnList.get(i);
+            double percentage = percentageList.get(i);
+            column.minWidthProperty().bind(table.widthProperty().multiply(percentage));
+            column.prefWidthProperty().bind(table.widthProperty().multiply(percentage));
+            column.maxWidthProperty().bind(table.widthProperty().multiply(percentage));
+        }
+    }
+
+    private <S, T> TableCell<S, T> createTableCell(Function<T, String> displayFunction, Pos alignment) {
+        TableCell<S, T> cell = new TableCell<S, T>() {
+            @Override
+            public void updateItem(T item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(getString());
+                setGraphic(null);
+            }
+
+            private String getString() {
+                T item = getItem();
+                return item == null ? "" : displayFunction.apply(item);
+            }
+        };
+        cell.setAlignment(alignment);
+
+        return cell;
+    }
+
     @Override
     protected void onSceneUpdate(Scene scene) {
         super.onSceneUpdate(scene);
-        fontSize.bind(getWidthRatio(scene.widthProperty()).multiply(fontSize.get()));
+        fontSize.bind(getWidthRatio().multiply(fontSize.get()));
     }
 }

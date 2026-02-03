@@ -80,8 +80,8 @@ public abstract class AbstractController implements Initializable {
         });
     }
 
-    protected DoubleBinding getWidthRatio(ReadOnlyDoubleProperty defaultProperty) {
-        return defaultProperty.divide((double) BASE_WIDTH);
+    protected DoubleBinding getWidthRatio() {
+        return getAtomicScene().get().widthProperty().divide((double) BASE_WIDTH);
     }
 
     protected void setLabelTextSize(final Label label, final int defaultSize, double sceneWidth) {

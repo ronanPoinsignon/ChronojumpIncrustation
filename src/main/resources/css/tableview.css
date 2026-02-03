@@ -1,3 +1,4 @@
+/* supprimer les scrollbar de la tableview */
 .table-view *.scroll-bar:horizontal *,
 .table-view *.scroll-bar:vertical * {
   -fx-background-color: null;
@@ -6,6 +7,7 @@
   -fx-padding: 0;
 }
 
+/* supprimer le header de la tableview */
 .noheader .column-header-background {
     -fx-max-height: 0;
     -fx-pref-height: 0;
