@@ -3,27 +3,26 @@ package prog.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import prog.executor.ControllerExecutor;
+import prog.utils.FxmlIncrustation;
+import prog.utils.Panel;
 
 import java.io.IOException;
 
 public class ControllerChoixIncrustation extends AbstractController {
 
+    private final ControllerExecutor controllerExecutor = ControllerExecutor.getExecutor();
+
     @FXML
     private void showBasicIncrustation(MouseEvent event) {
-        try {
-            switchScene("/fxml/basic_incrustation.fxml");
-        } catch(IOException e) {
-            throw new RuntimeException(e);
-        }
+        controllerExecutor.close(this);
+        controllerExecutor.show(FxmlIncrustation.BASIC, Panel.MAIN_PANEL);
     }
 
     @FXML
     private void showSHFIncrustation(MouseEvent event) {
-        try {
-            switchScene("/fxml/SHF_incrustation.fxml");
-        } catch(IOException e) {
-            throw new RuntimeException(e);
-        }
+        controllerExecutor.close(this);
+        controllerExecutor.show(FxmlIncrustation.SHF, Panel.MAIN_PANEL);
     }
 
     @Override

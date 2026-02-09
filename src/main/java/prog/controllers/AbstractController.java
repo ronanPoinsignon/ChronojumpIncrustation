@@ -3,16 +3,13 @@ package prog.controllers;
 import javafx.animation.FadeTransition;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
-import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -25,12 +22,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import prog.executor.ControllerExecutor;
 import prog.observableproperties.StringObsProperty;
 import prog.transmission.tache.AbstractTacheReception;
 import prog.transmission.tache.RawTacheReception;
-import prog.utils.ResourceUtils;
+import prog.utils.Utils;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -39,13 +36,10 @@ import java.util.function.Function;
 public abstract class AbstractController implements Initializable {
 
     private static final int FADE_DURATION = 200;
-
-    private static final String INIT_IP_ADRESSE = "192.168.1.31";
-//	private static final String INIT_IP_ADRESSE = "169.254.122.66";
-
     protected static final int BASE_WIDTH = 1280;
 
     private final Map<ObservableValue, List<ChangeListener<?>>> LISTENER_MAP = new HashMap<>();
+    private final ControllerExecutor controllerExecutor = ControllerExecutor.getExecutor();
 
     private boolean isFullScreen = false;
     private double coordX, coordY;
@@ -55,7 +49,7 @@ public abstract class AbstractController implements Initializable {
     private AnchorPane idAnchorBase;
 
     public AbstractController() {
-        AbstractTacheReception.setAdresse(INIT_IP_ADRESSE);
+        AbstractTacheReception.setAdresse(Utils.getLocalIp());
     }
 
     @Override
@@ -67,6 +61,18 @@ public abstract class AbstractController implements Initializable {
 
             onSceneUpdate(newScene);
         });
+    }
+
+    public void onClose() {
+        removeAllListener();
+    }
+
+    public boolean isFullScreen() {
+        return isFullScreen;
+    }
+
+    public void setFullScreen(boolean fullScreen) {
+        isFullScreen = fullScreen;
     }
 
     protected void bindLabelSize(Label label, int defaultSize, Scene scene) {
@@ -227,15 +233,8 @@ public abstract class AbstractController implements Initializable {
         });
     }
 
-    protected void switchScene(String fxml) throws IOException {
-        removeAllListener();
-        FXMLLoader loader = new FXMLLoader(ResourceUtils.getResource(fxml));
-        Parent next = loader.load();
-        Scene scene = new Scene(next);
-        Stage appStage = (Stage) this.getAtomicScene().get().getWindow();
-        AbstractController controller = loader.getController();
-        controller.isFullScreen = this.isFullScreen;
-        appStage.setScene(scene);
+    public Stage getStage() {
+        return (Stage) this.getAtomicScene().get().getWindow();
     }
 
     protected <T> void addListener(ObservableValue<T> property, ChangeListener<T> listener) {
@@ -257,5 +256,4 @@ public abstract class AbstractController implements Initializable {
             }
         }
     }
-
 }

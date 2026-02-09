@@ -1,21 +1,15 @@
 package prog.transmission;
 
-import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.ReadOnlyListWrapper;
 import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.SimpleListProperty;
 import prog.observableproperties.StringObsProperty;
 import prog.observableproperties.json.JsonCheval;
 import prog.observableproperties.json.ClassementCavalier;
 import prog.observableproperties.json.JsonEpreuve;
 import prog.observableproperties.json.JsonLastCavalier;
-import prog.transmission.tache.AbstractTacheReception;
-import prog.transmission.tache.JsonListTacheReception;
-import prog.transmission.tache.JsonTacheReception;
-import prog.transmission.tache.RawTacheReception;
-
-import java.util.List;
+import prog.transmission.tache.*;
+import prog.utils.IncrustationAction;
 
 public class EventObserver {
 
@@ -26,6 +20,7 @@ public class EventObserver {
     private static final int PORT_DOSSARD = 8094;					// port incruste dossard
     private static final int PORT_LAST_CAVALIER = 8095;				// port incruste classement dernier cavalier
     private static final int PORT_CLASSEMENT = 8096;				// port incruste classement 8 derniers cavaliers
+    private static final int PORT_EVENEMENT = 8099;				    // port gestion événement
 
     private static EventObserver eventObserver;
 
@@ -44,6 +39,7 @@ public class EventObserver {
     private final JsonCheval cheval;
     private final JsonLastCavalier lastCavalier;
     private final ReadOnlyListProperty<ClassementCavalier> classementCavalierList;
+    private final ActionEnumTacheReception incrustationAction;
 
     private EventObserver() {
         JsonTacheReception<JsonEpreuve> tacheEpreuve = new JsonTacheReception<>(PORT_LIEU_EPREUVE, JsonEpreuve.class);
@@ -58,6 +54,7 @@ public class EventObserver {
         cheval = tacheCheval.getObject();
         lastCavalier = tacheLastCavalier.getObject();
         classementCavalierList = new ReadOnlyListWrapper<>(tacheClassement.getObject());
+        incrustationAction = new ActionEnumTacheReception(PORT_EVENEMENT);
 
         this.init(chrono);
         this.init(dossard);
@@ -66,6 +63,7 @@ public class EventObserver {
         this.init(tacheCheval);
         this.init(tacheLastCavalier);
         this.init(tacheClassement);
+        this.init(incrustationAction);
     }
 
     private void init(AbstractTacheReception<?> tache) {
@@ -132,6 +130,10 @@ public class EventObserver {
 
     public ReadOnlyListProperty<ClassementCavalier> getClassementCavalierList() {
         return classementCavalierList;
+    }
+
+    public ReadOnlyObjectProperty<IncrustationAction> getIncrustationAction() {
+        return incrustationAction.valueProperty();
     }
 
 }

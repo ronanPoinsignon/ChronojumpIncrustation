@@ -1,8 +1,24 @@
 package prog.utils;
 
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 
 public class Utils {
+
+	private static final String INIT_IP_ADRESSE_LIVE = "169.254.122.66";
+
+    public static String getLiveIp() {
+        return INIT_IP_ADRESSE_LIVE;
+    }
+
+    public static String getLocalIp() {
+        try {
+            return Inet4Address.getLocalHost().getHostAddress();
+        } catch(UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static String capitalizeFirstOnly(String value) {
         if(value == null) {

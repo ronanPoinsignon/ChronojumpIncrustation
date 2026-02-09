@@ -10,7 +10,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
+import prog.executor.ControllerExecutor;
 import prog.transmission.EventObserver;
+import prog.utils.FxmlIncrustation;
 import prog.utils.Utils;
 
 import java.io.IOException;
@@ -19,7 +21,8 @@ import java.util.ResourceBundle;
 
 public class PanneauController extends AbstractController {
 
-    EventObserver eventObserver = EventObserver.getInstance();
+    private final ControllerExecutor controllerExecutor = ControllerExecutor.getExecutor();
+    private final EventObserver eventObserver = EventObserver.getInstance();
 
     @FXML
     private AnchorPane idAnchorBase;
@@ -161,11 +164,7 @@ public class PanneauController extends AbstractController {
     protected void anchorBaseOnMousePressed(MouseEvent evt, Stage stage) {
         super.anchorBaseOnMousePressed(evt, stage);
         if(MouseButton.SECONDARY == evt.getButton()) {
-            try {
-                this.switchScene("/fxml/classement_incrustation.fxml");
-            } catch(IOException e) {
-                e.printStackTrace();
-            }
+            controllerExecutor.switchScene(this, FxmlIncrustation.CLASSEMENT);
         }
     }
 }

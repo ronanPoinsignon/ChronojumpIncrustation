@@ -9,8 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import prog.executor.ControllerExecutor;
 import prog.observableproperties.json.ClassementCavalier;
 import prog.transmission.EventObserver;
+import prog.utils.FxmlIncrustation;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,6 +28,8 @@ public class ClassementIncrustration extends AbstractController {
     private static final int NB_SHOWN_CAVALIERS = 8;
 
     private final EventObserver eventObserver = EventObserver.getInstance();
+
+    private final ControllerExecutor controllerExecutor = ControllerExecutor.getExecutor();
 
     @FXML
     private TableView<ClassementCavalier> idTableClassement;
@@ -79,13 +83,7 @@ public class ClassementIncrustration extends AbstractController {
             } catch(InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            Platform.runLater(() -> {
-                try {
-                    switchScene("/fxml/panneau_incrustation.fxml");
-                } catch(IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+            Platform.runLater(() -> controllerExecutor.switchScene(this, FxmlIncrustation.PANNEAU));
         }).start();
     }
 
@@ -110,7 +108,6 @@ public class ClassementIncrustration extends AbstractController {
             public void updateItem(T item, boolean empty) {
                 super.updateItem(item, empty);
                 setText(getString());
-                setGraphic(null);
             }
 
             private String getString() {

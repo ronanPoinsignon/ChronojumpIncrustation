@@ -1,17 +1,16 @@
 package prog.controllers;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import prog.utils.ResourceUtils;
+import prog.executor.ControllerExecutor;
+import prog.utils.FxmlIncrustation;
+import prog.utils.Panel;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AbstractControllerIncrustation extends AbstractController {
+
+    private final ControllerExecutor controllerExecutor = ControllerExecutor.getExecutor();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -25,14 +24,6 @@ public class AbstractControllerIncrustation extends AbstractController {
     }
 
     private void openSecondaryPanel() throws IOException {
-        final Stage stage = new Stage();
-        final FXMLLoader loader = new FXMLLoader(ResourceUtils.getResource("/fxml/panneau_incrustation.fxml"));
-        final Parent sceneVideo = loader.load();
-        final Scene scene = new Scene(sceneVideo);
-        stage.setWidth(1280);
-        stage.setHeight(720);
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setScene(scene);
-        stage.show();
+        controllerExecutor.show(FxmlIncrustation.PANNEAU, Panel.SECONDARY_PANEL);
     }
 }

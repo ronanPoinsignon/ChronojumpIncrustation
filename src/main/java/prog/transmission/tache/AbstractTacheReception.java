@@ -51,7 +51,7 @@ public abstract class AbstractTacheReception<T> extends Task<T> {
 //				socket.close();
 			}
 			catch(final Exception e) {
-//				e.printStackTrace();
+				e.printStackTrace();
 //				socket.close();
 			}
 			finally {
