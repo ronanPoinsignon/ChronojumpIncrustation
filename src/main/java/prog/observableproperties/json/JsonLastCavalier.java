@@ -7,6 +7,7 @@ public class JsonLastCavalier extends AbstractJsonObject {
     private final StringObsProperty classement = new StringObsProperty();
     private final StringObsProperty cavalier = new StringObsProperty();
     private final StringObsProperty chrono = new StringObsProperty();
+    private final StringObsProperty penalite = new StringObsProperty();
 
     public StringObsProperty getClassement() {
         return classement;
@@ -20,6 +21,10 @@ public class JsonLastCavalier extends AbstractJsonObject {
         return chrono;
     }
 
+    public StringObsProperty getPenalite() {
+        return penalite;
+    }
+
     @Override
     public void from(AbstractJsonObject from) {
         if(!(from instanceof JsonLastCavalier)) {
@@ -31,5 +36,6 @@ public class JsonLastCavalier extends AbstractJsonObject {
         classement.setValue(fromCavalier.classement.getString());
         cavalier.setValue(fromCavalier.cavalier.getString());
         chrono.setValue(fromCavalier.chrono.getString());
+        penalite.setValue(fromCavalier.penalite.getString());
     }
 }

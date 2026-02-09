@@ -98,6 +98,10 @@ public class PanneauController extends AbstractController {
         this.bind(idMereCheval, eventObserver.getChevalMere());
         this.bind(idPenalite, eventObserver.getPenalite());
         this.bind(idChrono, eventObserver.getChrono());
+        this.bind(idClassementPlace, eventObserver.getLastClassement(), value -> value + ".");
+        this.bind(idClassementChrono, eventObserver.getLastChrono());
+        this.bind(idClassementCavalier, eventObserver.getLastCavalier());
+        this.bind(idClassementPenalite, eventObserver.getLastPenalite());
 
         // gestion responive
 

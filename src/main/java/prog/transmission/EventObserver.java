@@ -128,6 +128,10 @@ public class EventObserver {
         return lastCavalier.getChrono();
     }
 
+    public StringObsProperty getLastPenalite() {
+        return lastCavalier.getPenalite();
+    }
+
     public ReadOnlyListProperty<ClassementCavalier> getClassementCavalierList() {
         return classementCavalierList;
     }
