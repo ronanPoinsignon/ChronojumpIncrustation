@@ -7,8 +7,6 @@ import prog.executor.ControllerExecutor;
 import prog.utils.FxmlIncrustation;
 import prog.utils.Panel;
 
-import java.io.IOException;
-
 public class ControllerChoixIncrustation extends AbstractController {
 
     private final ControllerExecutor controllerExecutor = ControllerExecutor.getExecutor();

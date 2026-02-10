@@ -1,26 +1,22 @@
 package prog.controllers;
 
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import prog.executor.ControllerExecutor;
 import prog.observableproperties.json.ClassementCavalier;
 import prog.transmission.EventObserver;
 import prog.utils.FxUtils;
-import prog.utils.FxmlIncrustation;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.Function;
 
 public class ClassementIncrustration extends AbstractController {
 
@@ -29,8 +25,6 @@ public class ClassementIncrustration extends AbstractController {
     private static final int NB_SHOWN_CAVALIERS = 8;
 
     private final EventObserver eventObserver = EventObserver.getInstance();
-
-    private final ControllerExecutor controllerExecutor = ControllerExecutor.getExecutor();
 
     @FXML
     private TableView<ClassementCavalier> idTableClassement;

@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import prog.observableproperties.json.AbstractJsonObject;
 
-import java.util.List;
-
 public class JsonTacheReception<T extends AbstractJsonObject> extends AbstractJsonTacheReception<T, T, T> {
 
     public JsonTacheReception(int port, Class<T> clazz) {

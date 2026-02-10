@@ -11,7 +11,8 @@ import prog.utils.FxmlIncrustation;
 import prog.utils.Panel;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class ControllerExecutor {
@@ -21,9 +22,6 @@ public class ControllerExecutor {
     private static ControllerExecutor controllerExecutor;
 
     private final EventObserver eventObserver = EventObserver.getInstance();
-
-    private AbstractController mainPanel;
-    private AbstractController secondaryPanel;
 
     private final Map<AbstractController, Stage> controllerMap = new HashMap<>();
     private final Map<Panel, AbstractController> panelToControllerMap = new HashMap<>();
