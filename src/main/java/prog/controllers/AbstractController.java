@@ -9,10 +9,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseButton;
@@ -22,10 +20,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import prog.executor.ControllerExecutor;
 import prog.observableproperties.StringObsProperty;
 import prog.transmission.tache.AbstractTacheReception;
-import prog.transmission.tache.RawTacheReception;
 import prog.utils.Utils;
 
 import java.net.URL;
@@ -35,11 +31,10 @@ import java.util.function.Function;
 
 public abstract class AbstractController implements Initializable {
 
-    private static final int FADE_DURATION = 200;
+    protected static final int FADE_DURATION = 200;
     protected static final int BASE_WIDTH = 1280;
 
     private final Map<ObservableValue, List<ChangeListener<?>>> LISTENER_MAP = new HashMap<>();
-    private final ControllerExecutor controllerExecutor = ControllerExecutor.getExecutor();
 
     private boolean isFullScreen = false;
     private double coordX, coordY;
@@ -75,14 +70,15 @@ public abstract class AbstractController implements Initializable {
         isFullScreen = fullScreen;
     }
 
-    protected void bindLabelSize(Label label, int defaultSize, Scene scene) {
+    protected void bindLabelSize(Label label, Scene scene) {
+        double size = label.getFont().getSize();
         addListener(scene.widthProperty(), (obs, oldV, newV) -> {
             double width = scene.getWidth();
             if(width == 0) {
                 return;
             }
 
-            setLabelTextSize(label, defaultSize, scene.getWidth());
+            setLabelTextSize(label, size, scene.getWidth());
         });
     }
 
@@ -90,7 +86,7 @@ public abstract class AbstractController implements Initializable {
         return getAtomicScene().get().widthProperty().divide((double) BASE_WIDTH);
     }
 
-    protected void setLabelTextSize(final Label label, final int defaultSize, double sceneWidth) {
+    protected void setLabelTextSize(final Label label, final double defaultSize, double sceneWidth) {
         double textSize = getMultiplicateur(sceneWidth, defaultSize);
         label.setFont(Font.font(label.getFont().getFamily(), FontWeight.findByName(label.getFont().getStyle()), textSize));
     }
@@ -102,29 +98,6 @@ public abstract class AbstractController implements Initializable {
     protected double getMultiplicateur(double sceneWidth, double defaultSize) {
         final double widthRatio = getWidthRatio(sceneWidth);
         return widthRatio * defaultSize;
-    }
-
-    protected void setImageSize(ImageView imageView, Scene scene, int defaultSize) {
-        imageView.fitWidthProperty().bind(scene.widthProperty().multiply(defaultSize).divide(AbstractController.BASE_WIDTH));
-        imageView.fitHeightProperty().bind(scene.widthProperty().multiply(defaultSize).divide(AbstractController.BASE_WIDTH));
-    }
-
-    protected ChangeListener<Boolean> addFadeTransition(final Node node) {
-        return (obs, oldV, newV) -> {
-            final FadeTransition transition = new FadeTransition(Duration.millis(FADE_DURATION), node);
-            if(newV) {
-                transition.setFromValue(0);
-                transition.setToValue(1);
-            } else {
-                transition.setFromValue(1);
-                transition.setToValue(0);
-            }
-            transition.play();
-        };
-    }
-
-    protected void bind(final Label label, final RawTacheReception tacheReception) {
-        this.bind(label, tacheReception.valueProperty());
     }
 
     protected void bind(final Label label, final ReadOnlyObjectProperty<String> property) {

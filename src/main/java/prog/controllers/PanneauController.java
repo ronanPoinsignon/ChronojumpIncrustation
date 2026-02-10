@@ -15,7 +15,6 @@ import prog.transmission.EventObserver;
 import prog.utils.FxmlIncrustation;
 import prog.utils.Utils;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -151,17 +150,17 @@ public class PanneauController extends AbstractController {
     protected void onSceneUpdate(Scene scene) {
         super.onSceneUpdate(scene);
 
-        this.bindLabelSize(idCavalier, 45, scene);
-        this.bindLabelSize(idCheval, 45, scene);
-        this.bindLabelSize(idPereCheval, 35, scene);
-        this.bindLabelSize(idDossard, 35, scene);
-        this.bindLabelSize(idMereCheval, 35, scene);
-        this.bindLabelSize(idChrono, 50, scene);
-        this.bindLabelSize(idPenalite, 40, scene);
-        this.bindLabelSize(idClassementPenalite, 35, scene);
-        this.bindLabelSize(idClassementChrono, 35, scene);
-        this.bindLabelSize(idClassementPlace, 35, scene);
-        this.bindLabelSize(idClassementCavalier, 35, scene);
+        this.bindLabelSize(idCavalier, scene);
+        this.bindLabelSize(idCheval, scene);
+        this.bindLabelSize(idPereCheval, scene);
+        this.bindLabelSize(idDossard, scene);
+        this.bindLabelSize(idMereCheval, scene);
+        this.bindLabelSize(idChrono, scene);
+        this.bindLabelSize(idPenalite, scene);
+        this.bindLabelSize(idClassementPenalite, scene);
+        this.bindLabelSize(idClassementChrono, scene);
+        this.bindLabelSize(idClassementPlace, scene);
+        this.bindLabelSize(idClassementCavalier, scene);
     }
 
     @Override

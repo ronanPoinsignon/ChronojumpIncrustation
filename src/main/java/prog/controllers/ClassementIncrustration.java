@@ -12,6 +12,7 @@ import javafx.scene.text.FontWeight;
 import prog.executor.ControllerExecutor;
 import prog.observableproperties.json.ClassementCavalier;
 import prog.transmission.EventObserver;
+import prog.utils.FxUtils;
 import prog.utils.FxmlIncrustation;
 
 import java.io.IOException;
@@ -53,7 +54,7 @@ public class ClassementIncrustration extends AbstractController {
         idTableClassement.itemsProperty().bind(eventObserver.getClassementCavalierList());
         idColumnClassement.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getClassement()));
         idColumnCavalier.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getCavalier()));
-        bindTableColumnWidth(idTableClassement, Arrays.asList(idColumnClassement, idColumnCavalier), Arrays.asList(PERCENTAGE_COLUMN_CLASSEMENT, PERCENTAGE_COLUMN_CAVALIER));
+        FxUtils.bindTableColumnWidth(idTableClassement, Arrays.asList(idColumnClassement, idColumnCavalier), Arrays.asList(PERCENTAGE_COLUMN_CLASSEMENT, PERCENTAGE_COLUMN_CAVALIER));
 
         // gestion style table view
         style.bind(Bindings.createStringBinding(() -> String.format(
@@ -74,50 +75,8 @@ public class ClassementIncrustration extends AbstractController {
             row.styleProperty().bind(style);
             return row ;
         });
-        idColumnClassement.setCellFactory(tc -> createTableCell(value -> value + ".", Pos.CENTER));
-        idColumnCavalier.setCellFactory(tc -> createTableCell(String::toString, Pos.CENTER_LEFT));
-
-        new Thread(() -> {
-            try {
-                Thread.sleep(3000);
-            } catch(InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            Platform.runLater(() -> controllerExecutor.switchScene(this, FxmlIncrustation.PANNEAU));
-        }).start();
-    }
-
-    private void bindTableColumnWidth(TableView<?> table, List<TableColumn<?, ?>> columnList, List<Double> percentageList) {
-        if(columnList.size() != percentageList.size()) {
-            throw new ArrayIndexOutOfBoundsException("Arrays are not the same size.");
-        }
-
-        int size = columnList.size();
-        for(int i = 0; i < size; i++) {
-            TableColumn<?, ?> column = columnList.get(i);
-            double percentage = percentageList.get(i);
-            column.minWidthProperty().bind(table.widthProperty().multiply(percentage));
-            column.prefWidthProperty().bind(table.widthProperty().multiply(percentage));
-            column.maxWidthProperty().bind(table.widthProperty().multiply(percentage));
-        }
-    }
-
-    private <S, T> TableCell<S, T> createTableCell(Function<T, String> displayFunction, Pos alignment) {
-        TableCell<S, T> cell = new TableCell<S, T>() {
-            @Override
-            public void updateItem(T item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(getString());
-            }
-
-            private String getString() {
-                T item = getItem();
-                return item == null ? "" : displayFunction.apply(item);
-            }
-        };
-        cell.setAlignment(alignment);
-
-        return cell;
+        idColumnClassement.setCellFactory(tc -> FxUtils.createTableCell(value -> value + ".", Pos.CENTER));
+        idColumnCavalier.setCellFactory(tc -> FxUtils.createTableCell(String::toString, Pos.CENTER_LEFT));
     }
 
     @Override

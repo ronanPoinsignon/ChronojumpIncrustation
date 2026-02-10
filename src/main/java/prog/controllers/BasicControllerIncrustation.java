@@ -41,10 +41,10 @@ public class BasicControllerIncrustation extends AbstractControllerIncrustation 
     protected void onSceneUpdate(Scene scene) {
         super.onSceneUpdate(scene);
 
-        this.bindLabelSize(idNomCavalier, 20, scene);
-        this.bindLabelSize(idPenalite, 20, scene);
-        this.bindLabelSize(idNomCheval, 20, scene);
-        this.bindLabelSize(idDossard, 20, scene);
-        this.bindLabelSize(idChrono, 20, scene);
+        this.bindLabelSize(idNomCavalier, scene);
+        this.bindLabelSize(idPenalite, scene);
+        this.bindLabelSize(idNomCheval, scene);
+        this.bindLabelSize(idDossard, scene);
+        this.bindLabelSize(idChrono, scene);
     }
 }

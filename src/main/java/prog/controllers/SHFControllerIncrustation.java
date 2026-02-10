@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import prog.transmission.EventObserver;
+import prog.utils.FxUtils;
 import prog.utils.Utils;
 
 public class SHFControllerIncrustation extends AbstractControllerIncrustation {
@@ -68,10 +69,8 @@ public class SHFControllerIncrustation extends AbstractControllerIncrustation {
 		this.bind(idChrono, eventObserver.getChrono());
 		this.bind(idDossard, eventObserver.getDossard());
 		this.bind(idPenalite, eventObserver.getPenalite());
-
-		bind(idLieu, eventObserver.getLieuEpreuve());
-		bind(idNumeroEpreuve, eventObserver.getNumeroEpreuve());
-
+		this.bind(idLieu, eventObserver.getLieuEpreuve());
+		this.bind(idNumeroEpreuve, eventObserver.getNumeroEpreuve());
 		this.bind(idNomCheval, eventObserver.getChevalName());
 		this.bind(idRaceCheval, eventObserver.getChevalRace());
 		this.bind(idPereCheval, eventObserver.getChevalPere(), value -> "Père : " + value);
@@ -83,7 +82,7 @@ public class SHFControllerIncrustation extends AbstractControllerIncrustation {
 		// gestion visibilité pane principaux
 
 		idGridpaneChrono.visibleProperty().bind(idChrono.visibleProperty());
-		addListener(idChrono.visibleProperty(), addFadeTransition(idGridpaneChrono));
+		addListener(idChrono.visibleProperty(), FxUtils.addFadeTransition(idGridpaneChrono, AbstractController.FADE_DURATION));
 
 		BooleanBinding allLabelsVisible = Bindings.or(Bindings.createBooleanBinding(() -> false), idNomCheval.visibleProperty())
 				.or(idRaceCheval.visibleProperty())
@@ -94,7 +93,7 @@ public class SHFControllerIncrustation extends AbstractControllerIncrustation {
 				.or(idDossard.visibleProperty());
 
 		idGridpaneInfo.visibleProperty().bind(allLabelsVisible);
-		addListener(allLabelsVisible, addFadeTransition(idGridpaneInfo));
+		addListener(allLabelsVisible, FxUtils.addFadeTransition(idGridpaneInfo, AbstractController.FADE_DURATION));
 
 		//		Gestion responsive
 		idLogo.fitWidthProperty().bind(idPaneLogo.widthProperty().multiply(0.8));
@@ -110,20 +109,20 @@ public class SHFControllerIncrustation extends AbstractControllerIncrustation {
 	protected void onSceneUpdate(Scene scene) {
 		super.onSceneUpdate(scene);
 
-		setImageSize(idImageChrono, scene, 35);
-		setImageSize(idImageCavalier, scene, 64);
+		FxUtils.setImageSize(idImageChrono, scene, 35, AbstractController.BASE_WIDTH);
+		FxUtils.setImageSize(idImageCavalier, scene, 64, AbstractController.BASE_WIDTH);
 
-		this.bindLabelSize(idLieu, 16, scene);
-		this.bindLabelSize(idNumeroEpreuve, 16, scene);
-		this.bindLabelSize(idPereCheval, 16, scene);
-		this.bindLabelSize(idMereCheval, 16, scene);
-		this.bindLabelSize(idPereMereCheval, 16, scene);
-		this.bindLabelSize(idPrenomCavalier, 16, scene);
-		this.bindLabelSize(idNomCavalier, 16, scene);
-		this.bindLabelSize(idPenalite, 23, scene);
-		this.bindLabelSize(idNomCheval, 23, scene);
-		this.bindLabelSize(idRaceCheval, 23, scene);
-		this.bindLabelSize(idDossard, 23, scene);
-		this.bindLabelSize(idChrono, 23, scene);
+		this.bindLabelSize(idLieu, scene);
+		this.bindLabelSize(idNumeroEpreuve, scene);
+		this.bindLabelSize(idPereCheval, scene);
+		this.bindLabelSize(idMereCheval, scene);
+		this.bindLabelSize(idPereMereCheval, scene);
+		this.bindLabelSize(idPrenomCavalier, scene);
+		this.bindLabelSize(idNomCavalier, scene);
+		this.bindLabelSize(idPenalite, scene);
+		this.bindLabelSize(idNomCheval, scene);
+		this.bindLabelSize(idRaceCheval, scene);
+		this.bindLabelSize(idDossard, scene);
+		this.bindLabelSize(idChrono, scene);
 	}
 }
