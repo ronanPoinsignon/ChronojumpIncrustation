@@ -10,4 +10,9 @@ public class RawTacheReception extends AbstractTacheReception<String> {
     protected String convert(String value) {
         return value;
     }
+
+    @Override
+    public void reset() {
+        this.updateValue("");
+    }
 }

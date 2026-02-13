@@ -32,4 +32,9 @@ public class JsonListTacheReception<T> extends AbstractJsonTacheReception<List<T
             getObject().addAll(value);
         });
     }
+
+    @Override
+    public void reset() {
+        updateValue(new ArrayList<>());
+    }
 }

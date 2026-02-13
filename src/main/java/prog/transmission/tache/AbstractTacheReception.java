@@ -1,13 +1,13 @@
 package prog.transmission.tache;
 
+import javafx.concurrent.Task;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
-
-import javafx.concurrent.Task;
 
 public abstract class AbstractTacheReception<T> extends Task<T> {
 
@@ -31,23 +31,23 @@ public abstract class AbstractTacheReception<T> extends Task<T> {
 				}
 			}
 			catch(UnknownHostException e) {
-//				e.printStackTrace();
+				e.printStackTrace();
 //				socket.close();
 			}
 			catch(NoRouteToHostException e) { //en cas de debranchement du fil
-//				e.printStackTrace();
+				e.printStackTrace();
 //				socket.close();
 			}
 			catch(SocketTimeoutException e) { //en cas d'erreur sur la socket (principalement un runTimeException du au fait que la connexion crash si elle n'est pas effectuée dans les X secondes en fonction de RECHARGEMENT
-//				e.printStackTrace();
+				e.printStackTrace();
 //				socket.close();
 			}
 			catch(SocketException e) { //en cas de connexion refusée
-//				e.printStackTrace();
+				e.printStackTrace();
 //				socket.close();
 			}
 			catch (IOException e) {
-//				e.printStackTrace();
+				e.printStackTrace();
 //				socket.close();
 			}
 			catch(final Exception e) {
@@ -95,6 +95,7 @@ public abstract class AbstractTacheReception<T> extends Task<T> {
 	}
 
 	protected abstract T convert(String value);
+	public abstract void reset();
 
 	public static void setAdresse(final String adresse) {
 		AbstractTacheReception.adresse = adresse;

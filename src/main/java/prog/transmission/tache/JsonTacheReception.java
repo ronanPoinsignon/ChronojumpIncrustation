@@ -30,4 +30,9 @@ public class JsonTacheReception<T extends AbstractJsonObject> extends AbstractJs
     protected void updateValue(T value) {
         Platform.runLater(() -> getObject().from(value));
     }
+
+    @Override
+    public void reset() {
+        updateValue(createObject());
+    }
 }

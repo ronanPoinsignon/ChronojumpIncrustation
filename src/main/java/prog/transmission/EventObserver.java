@@ -4,8 +4,8 @@ import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.ReadOnlyListWrapper;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import prog.observableproperties.StringObsProperty;
-import prog.observableproperties.json.JsonCheval;
 import prog.observableproperties.json.ClassementCavalier;
+import prog.observableproperties.json.JsonCheval;
 import prog.observableproperties.json.JsonEpreuve;
 import prog.observableproperties.json.JsonLastCavalier;
 import prog.transmission.tache.*;
@@ -35,6 +35,11 @@ public class EventObserver {
     private final RawTacheReception chrono;
     private final RawTacheReception dossard;
     private final RawTacheReception penalite;
+    private final JsonTacheReception<JsonEpreuve> tacheEpreuve;
+    private final JsonTacheReception<JsonCheval> tacheCheval;
+    private final JsonTacheReception<JsonLastCavalier> tacheLastCavalier;
+    private final JsonListTacheReception<ClassementCavalier> tacheClassement;
+
     private final JsonEpreuve epreuve;
     private final JsonCheval cheval;
     private final JsonLastCavalier lastCavalier;
@@ -42,10 +47,10 @@ public class EventObserver {
     private final ActionEnumTacheReception incrustationAction;
 
     private EventObserver() {
-        JsonTacheReception<JsonEpreuve> tacheEpreuve = new JsonTacheReception<>(PORT_LIEU_EPREUVE, JsonEpreuve.class);
-        JsonTacheReception<JsonCheval> tacheCheval = new JsonTacheReception<>(PORT_CHEVAL_JSON, JsonCheval.class);
-        JsonTacheReception<JsonLastCavalier> tacheLastCavalier = new JsonTacheReception<>(PORT_LAST_CAVALIER, JsonLastCavalier.class);
-        JsonListTacheReception<ClassementCavalier> tacheClassement = new JsonListTacheReception<>(PORT_CLASSEMENT, ClassementCavalier.class);
+        tacheEpreuve = new JsonTacheReception<>(PORT_LIEU_EPREUVE, JsonEpreuve.class);
+        tacheCheval = new JsonTacheReception<>(PORT_CHEVAL_JSON, JsonCheval.class);
+        tacheLastCavalier = new JsonTacheReception<>(PORT_LAST_CAVALIER, JsonLastCavalier.class);
+        tacheClassement = new JsonListTacheReception<>(PORT_CLASSEMENT, ClassementCavalier.class);
 
         chrono =  new RawTacheReception(PORT_CHRONO);
         dossard = new RawTacheReception(PORT_DOSSARD);
@@ -138,6 +143,16 @@ public class EventObserver {
 
     public ReadOnlyObjectProperty<IncrustationAction> getIncrustationAction() {
         return incrustationAction.valueProperty();
+    }
+
+    public void resetValues() {
+        chrono.reset();
+        dossard.reset();
+        penalite.reset();
+        tacheCheval.reset();
+        tacheLastCavalier.reset();
+        tacheClassement.reset();
+        incrustationAction.reset();
     }
 
 }

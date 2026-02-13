@@ -17,4 +17,9 @@ public class ActionEnumTacheReception extends AbstractTacheReception<Incrustatio
             return null;
         }
     }
+
+    @Override
+    public void reset() {
+
+    }
 }
