@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AbstractControllerIncrustation extends AbstractController {
+public abstract class AbstractControllerIncrustation extends AbstractController {
 
     private final ControllerExecutor controllerExecutor = ControllerExecutor.getExecutor();
 
