@@ -32,7 +32,7 @@ public class ControllerExecutor {
     }
 
     private void gestionEvent() {
-        eventObserver.getIncrustationAction().addListener((obs, oldEvent, newEvent) -> newEvent.execute(this));
+        eventObserver.getIncrustationAction().addListener((obs, oldEvent, newEvent) -> newEvent.execute());
     }
 
     public static ControllerExecutor getExecutor() {

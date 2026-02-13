@@ -1,22 +1,22 @@
 package prog.utils;
 
 import prog.executor.ControllerExecutor;
-
-import java.util.function.Consumer;
+import prog.transmission.EventObserver;
 
 public enum IncrustationAction {
 
-    SHOW_PANNEAU(executor -> executor.switchScene(Panel.SECONDARY_PANEL, FxmlIncrustation.PANNEAU)),
-    SHOW_CLASSEMENT(executor -> executor.switchScene(Panel.SECONDARY_PANEL, FxmlIncrustation.CLASSEMENT));
+    SHOW_PANNEAU(() -> ControllerExecutor.getExecutor().switchScene(Panel.SECONDARY_PANEL, FxmlIncrustation.PANNEAU)),
+    SHOW_CLASSEMENT(() -> ControllerExecutor.getExecutor().switchScene(Panel.SECONDARY_PANEL, FxmlIncrustation.CLASSEMENT)),
+    RESET_ALL(() -> EventObserver.getInstance().resetValues());
 
-    private final Consumer<ControllerExecutor> controllerConsumer;
+    private final Runnable runnable;
 
-    IncrustationAction(Consumer<ControllerExecutor> controllerConsumer) {
-        this.controllerConsumer = controllerConsumer;
+    IncrustationAction(Runnable runnable) {
+        this.runnable = runnable;
     }
 
-    public void execute(ControllerExecutor controllerExecutor) {
-        controllerConsumer.accept(controllerExecutor);
+    public void execute() {
+        runnable.run();
     }
 
 }
