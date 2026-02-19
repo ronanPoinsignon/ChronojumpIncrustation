@@ -1,6 +1,7 @@
 package prog.transmission.tache;
 
 import javafx.concurrent.Task;
+import prog.utils.Utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 
 public abstract class AbstractTacheReception<T> extends Task<T> {
 
-	private static String adresse = "";
+	private static String adresse = Utils.getLiveIp();
 
 	private Socket socket = new Socket();
 	private final int port;

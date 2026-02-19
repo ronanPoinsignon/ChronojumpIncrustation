@@ -21,8 +21,6 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import prog.observableproperties.StringObsProperty;
-import prog.transmission.tache.AbstractTacheReception;
-import prog.utils.Utils;
 
 import java.net.URL;
 import java.util.*;
@@ -44,7 +42,7 @@ public abstract class AbstractController implements Initializable {
     private AnchorPane idAnchorBase;
 
     public AbstractController() {
-        AbstractTacheReception.setAdresse(Utils.getLocalIp());
+        
     }
 
     @Override
