@@ -3,7 +3,6 @@ package prog.transmission.tache;
 import javafx.concurrent.Task;
 import prog.utils.Utils;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -64,20 +63,21 @@ public abstract class AbstractTacheReception<T> extends Task<T> {
 	public void lireDonnees() throws IOException {
 		char[] info = new char[10000];
 		InputStream input;
-		String reponsePrec = "";
-		String resultat;
+        String resultat;
 		input = socket.getInputStream();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.ISO_8859_1));
+		InputStreamReader isr = new InputStreamReader(input, StandardCharsets.ISO_8859_1);
 		while(true) {
-			reader.read(info);
+			int readResult = isr.read(info);
+			if(readResult == -1) {
+				throw new SocketTimeoutException("Server stopped.");
+			}
+
 			resultat = new String(info);
 			info = new char[10000];
-			resultat = resultat.trim();
-			if(!resultat.isEmpty() && !resultat.equals(reponsePrec)) {
-				updateValue(convert(parseQuote(resultat)));
-				reponsePrec = resultat;
-			}
-			//socket.sendUrgentData(1); //remettre cette ligne fait crash l'application après 15 read pour une raison inconnue
+			resultat = parseQuote(resultat.trim());
+			if(!resultat.isEmpty()) {
+				updateValue(convert(resultat));
+            }
 		}
 	}
 
