@@ -31,23 +31,23 @@ public abstract class AbstractTacheReception<T> extends Task<T> {
 				}
 			}
 			catch(UnknownHostException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 //				socket.close();
 			}
 			catch(NoRouteToHostException e) { //en cas de debranchement du fil
-				e.printStackTrace();
+//				e.printStackTrace();
 //				socket.close();
 			}
 			catch(SocketTimeoutException e) { //en cas d'erreur sur la socket (principalement un runTimeException du au fait que la connexion crash si elle n'est pas effectuée dans les X secondes en fonction de RECHARGEMENT
-				e.printStackTrace();
+//				e.printStackTrace();
 //				socket.close();
 			}
 			catch(SocketException e) { //en cas de connexion refusée
-				e.printStackTrace();
+//				e.printStackTrace();
 //				socket.close();
 			}
 			catch (IOException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 //				socket.close();
 			}
 			catch(final Exception e) {
